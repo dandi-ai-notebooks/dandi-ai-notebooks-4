@@ -123,23 +123,23 @@ def process_dandiset(*, dandiset_id: str, version: str, review_model: str):
                 continue
             comparison_fname = f'{review_folder}/{subdir1}/comparisons/{subdir2}/comparison.json'
             if not os.path.exists(comparison_fname):
-                cmd = f'./scripts/comparison.py --dandiset_id {dandiset_id} --version {version} --model {review_model} --subfolder1_name {subdir1} --subfolder2_name {subdir2}'
-                print(f"Running command: {cmd}")
-                result = os.system(cmd)
-                if result != 0:
-                    raise RuntimeError(f"Failed to run command: {cmd}")
-                if not os.path.exists(comparison_fname):
-                    raise RuntimeError(f"Comparison file {comparison_fname} does not exist even after running the command")
+                pass
+                # cmd = f'./scripts/comparison.py --dandiset_id {dandiset_id} --version {version} --model {review_model} --subfolder1_name {subdir1} --subfolder2_name {subdir2}'
+                # print(f"Running command: {cmd}")
+                # result = os.system(cmd)
+                # if result != 0:
+                #     raise RuntimeError(f"Failed to run command: {cmd}")
+                # if not os.path.exists(comparison_fname):
+                #     raise RuntimeError(f"Comparison file {comparison_fname} does not exist even after running the command")
             else:
                 print(f"Comparison file {comparison_fname} exists")
-            if not os.path.exists(comparison_fname):
-                raise RuntimeError(f"Comparison file {comparison_fname} does not exist even after running the command")
-            with open(comparison_fname, 'r') as f:
-                comparison = json.load(f)
-            selection = comparison['selection']
-            comparison_results.append((
-                subdir1, subdir2, selection
-            ))
+            if os.path.exists(comparison_fname):
+                with open(comparison_fname, 'r') as f:
+                    comparison = json.load(f)
+                selection = comparison['selection']
+                comparison_results.append((
+                    subdir1, subdir2, selection
+                ))
     nodes1 = []
     nodes2 = []
     selections = []
