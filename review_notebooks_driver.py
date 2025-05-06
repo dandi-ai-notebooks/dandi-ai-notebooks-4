@@ -79,81 +79,56 @@ def rank_notebooks(nodes1: List[str],
     # sort by estimated ability (descending)
     return sorted(theta.keys(), key=lambda k: theta[k], reverse=True)
 
-def suggest_next_comparison(nodes1: List[str],
-                            nodes2: List[str],
-                            selections: List[int],
-                            *,
-                            max_iter: int = 1000,
-                            tol: float = 1e-8) -> Tuple[str, str]:
+def suggest_next_comparison(
+    nodes1: List[str],
+    nodes2: List[str],
+    selections: List[int],
+    *,
+    alpha: float = 0.5,
+    max_iter: int = 1000,
+    tol: float = 1e-8,
+) -> Tuple[str, str]:
     """
-    Pick the next pair of notebooks to compare so that the expected
-    information gain about the ranking is maximised.
-
-    Parameters
-    ----------
-    nodes1, nodes2, selections
-        The same three lists you feed to `rank_notebooks`.
-    max_iter, tol
-        Passed straight through to the internal Bradley–Terry fit.
-
-    Returns
-    -------
-    (str, str)
-        The two notebook identifiers that should be compared next.
+    Choose the pair (i, j) that maximises expected information gain,
+    measured by Shannon entropy of the Bradley–Terry win probability and
+    down‑weighted by how often the pair has already been compared.
     """
-    # ---------- 1.  Fit Bradley–Terry once to get θ --------------------------
-    items = set(nodes1) | set(nodes2)
-    theta: Dict[str, float] = {i: 1.0 for i in items}
+    if len(nodes1) == 0:          # nothing compared yet → any pair is fine
+        raise ValueError("At least one past comparison is required")
 
-    for _ in range(max_iter):
-        wins  = {i: 0.0 for i in items}
-        denom = {i: 0.0 for i in items}
+    theta = _fit_bradley_terry(nodes1, nodes2, selections,
+                               alpha=alpha, max_iter=max_iter, tol=tol)
 
-        for a, b, s in zip(nodes1, nodes2, selections):
-            if s == 1:
-                wins[a] += 1
-            elif s == 2:
-                wins[b] += 1
-            else:
-                raise ValueError("selections must contain only 1 or 2")
-
-            inv = 1.0 / (theta[a] + theta[b])
-            denom[a] += inv
-            denom[b] += inv
-
-        new_theta = {i: (wins[i] / denom[i] if denom[i] else theta[i])
-                     for i in items}
-
-        mean_theta = sum(new_theta.values()) / len(new_theta)
-        for i in items:
-            new_theta[i] /= mean_theta or 1.0
-
-        if max(abs(new_theta[i] - theta[i]) for i in items) < tol:
-            theta = new_theta
-            break
-        theta = new_theta
-
-    # ---------- 2.  Count how often each pair has already been compared ------
+    items = set(theta)
+    # Count how many times each unordered pair has been judged
     pair_counts: Dict[frozenset, int] = {
         frozenset({a, b}): 0 for a, b in itertools.combinations(items, 2)
     }
     for a, b in zip(nodes1, nodes2):
         pair_counts[frozenset({a, b})] += 1
 
-    # ---------- 3.  Score every candidate pair ------------------------------
+    # Scan all possible new pairs
+    EPS = 1e-12
     best_pair, best_score = None, -1.0
     for i, j in itertools.combinations(items, 2):
-        p_ij = theta[i] / (theta[i] + theta[j])
-        if p_ij in (0.0, 1.0):            # zero entropy: skip deterministic pairs
+        denom = theta[i] + theta[j]
+        if denom < EPS:                 # both abilities ~0 → no information
             continue
+
+        p_ij = theta[i] / denom
+        # Ignore pairs that are (almost) deterministic
+        if p_ij < EPS or (1 - p_ij) < EPS:
+            continue
+
         entropy = -p_ij * math.log2(p_ij) - (1 - p_ij) * math.log2(1 - p_ij)
         score   = entropy / (1 + pair_counts[frozenset({i, j})])
+
         if score > best_score:
             best_score, best_pair = score, (i, j)
 
     if best_pair is None:
-        raise RuntimeError("All remaining pairs are deterministic; "
-                           "additional comparisons won’t change the ranking.")
+        raise RuntimeError("All remaining pairs give zero expected gain; "
+                           "further comparisons will not improve the ranking.")
     return best_pair
 
 def process_dandiset(*, dandiset_id: str, version: str, review_model: str):
