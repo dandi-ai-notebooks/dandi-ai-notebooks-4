@@ -102,6 +102,7 @@ def suggest_next_comparison(
     nodes1: List[str],
     nodes2: List[str],
     selections: List[int],
+    all_nodes: List[str],
     *,
     alpha: float = 0.5,
     max_iter: int = 1000,
@@ -118,7 +119,7 @@ def suggest_next_comparison(
     theta = _fit_bradley_terry(nodes1, nodes2, selections,
                                alpha=alpha, max_iter=max_iter, tol=tol)
 
-    items = set(theta)
+    items = set(all_nodes)
     # Count how many times each unordered pair has been judged
     pair_counts: Dict[frozenset, int] = {
         frozenset({a, b}): 0 for a, b in itertools.combinations(items, 2)
@@ -208,7 +209,8 @@ def process_dandiset(*, dandiset_id: str, version: str, review_model: str):
         next_pair = suggest_next_comparison(
             nodes1=[i[0] for i in comparison_results],
             nodes2=[i[1] for i in comparison_results],
-            selections=[i[2] for i in comparison_results]
+            selections=[i[2] for i in comparison_results],
+            all_nodes=passing_subdirs
         )
         print(f"Next pair to compare: {next_pair}")
         subdir1, subdir2 = next_pair
