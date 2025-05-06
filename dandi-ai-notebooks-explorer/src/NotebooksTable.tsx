@@ -51,7 +51,7 @@ export default function NotebooksTable({ notebooks, qualResults, rankResults, mo
   };
 
   const getPromptUrl = (prompt: string) => {
-    return `https://github.com/dandi-ai-notebooks/dandi-ai-notebooks-4/blob/main/scripts/templates/generate_notebook/${prompt}.txt`;
+    return `https://github.com/dandi-ai-notebooks/dandi-ai-notebooks-4/blob/main/scripts/templates/generate_notebook/${prompt}`;
   };
 
   const filteredAndSortedNotebooks = useMemo(() => {
@@ -62,16 +62,16 @@ export default function NotebooksTable({ notebooks, qualResults, rankResults, mo
 
     return [...filtered].sort((a, b) => {
       if (sortConfig.key === 'qual') {
-        const aQual = qualResults.get(`${a.dandiset_id}/${a.subfolder}`) ?? false;
-        const bQual = qualResults.get(`${b.dandiset_id}/${b.subfolder}`) ?? false;
+        const aQual = qualResults.get(`${a.dandiset_id}/${a.version}/${a.subfolder}`) ?? false;
+        const bQual = qualResults.get(`${b.dandiset_id}/${b.version}/${b.subfolder}`) ?? false;
         return sortConfig.direction === 'asc'
           ? (aQual === bQual ? 0 : aQual ? 1 : -1)
           : (aQual === bQual ? 0 : aQual ? -1 : 1);
       }
 
       if (sortConfig.key === 'rank') {
-        const aRank = rankResults.get(`${a.dandiset_id}/${a.subfolder}`) ?? Number.MAX_SAFE_INTEGER;
-        const bRank = rankResults.get(`${b.dandiset_id}/${b.subfolder}`) ?? Number.MAX_SAFE_INTEGER;
+        const aRank = rankResults.get(`${a.dandiset_id}/${a.version}/${a.subfolder}`) ?? Number.MAX_SAFE_INTEGER;
+        const bRank = rankResults.get(`${b.dandiset_id}/${b.version}/${b.subfolder}`) ?? Number.MAX_SAFE_INTEGER;
         return sortConfig.direction === 'asc'
           ? aRank - bRank
           : bRank - aRank;
@@ -105,6 +105,8 @@ export default function NotebooksTable({ notebooks, qualResults, rankResults, mo
       return 0;
     });
   }, [notebooks, sortConfig, selectedDandiset, qualResults, rankResults]);
+
+  console.log('--- notebooks', notebooks);
 
   return (
     <div>
@@ -212,7 +214,7 @@ export default function NotebooksTable({ notebooks, qualResults, rankResults, mo
           <TableBody>
             {filteredAndSortedNotebooks.map((notebook, index) => {
               // const critiqueUrls = getCritiqueUrls(notebook);
-              const isRankOne = rankResults.get(`${notebook.dandiset_id}/${notebook.subfolder}`) === 1;
+              const isRankOne = rankResults.get(`${notebook.dandiset_id}/${notebook.version}/${notebook.subfolder}`) === 1;
               return (
                 <TableRow
                   key={index}
@@ -283,13 +285,13 @@ export default function NotebooksTable({ notebooks, qualResults, rankResults, mo
                     })()}
                   </TableCell> */}
                   <TableCell>
-                    {qualResults.get(`${notebook.dandiset_id}/${notebook.subfolder}`) !== undefined ? (
+                    {qualResults.get(`${notebook.dandiset_id}/${notebook.version}/${notebook.subfolder}`) !== undefined ? (
                       <Link
                         href={`https://github.com/dandi-ai-notebooks/dandi-ai-notebook-reviews/blob/main/reviews/${modelForReviews}/dandisets/${notebook.dandiset_id}/${notebook.subfolder}/qualification_test.json`}
                         target="_blank"
                         rel="noopener noreferrer"
                       >
-                        {qualResults.get(`${notebook.dandiset_id}/${notebook.subfolder}`) ? (
+                        {qualResults.get(`${notebook.dandiset_id}/${notebook.version}/${notebook.subfolder}`) ? (
                           <Typography component="span" sx={{ color: 'success.main' }}>✓</Typography>
                         ) : '✗'}
                       </Link>
@@ -301,7 +303,7 @@ export default function NotebooksTable({ notebooks, qualResults, rankResults, mo
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      {rankResults.get(`${notebook.dandiset_id}/${notebook.subfolder}`)}
+                      {rankResults.get(`${notebook.dandiset_id}/${notebook.version}/${notebook.subfolder}`)}
                     </Link>
                   </TableCell>
                 </TableRow>

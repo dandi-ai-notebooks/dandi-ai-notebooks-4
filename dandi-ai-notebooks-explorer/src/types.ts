@@ -80,6 +80,7 @@ export type ReviewResultType = {
   type: "notebook",
   dandiset_id: string;
   version: string;
+  subfolder: string;
   model: string;
   prompt: string;
   metadata: Metadata;

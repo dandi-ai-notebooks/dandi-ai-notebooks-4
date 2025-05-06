@@ -47,13 +47,15 @@ function App() {
       const qualResults = new Map(
         reviewResults
           .filter((r): r is Extract<ReviewResultType, {type: 'qualification_test'}> => r.type === 'qualification_test')
-          .map(r => [`${r.dandiset_id}/${r.subfolder}`, r.passing])
+          .map(r => [`${r.dandiset_id}/${r.version}/${r.subfolder}`, r.passing])
       );
       const rankResults = new Map(
         reviewResults
           .filter((r): r is Extract<ReviewResultType, {type: 'rankings'}> => r.type === 'rankings')
-          .flatMap(r => r.notebooks.map((n, i) => [`${r.dandiset_id}/${n.subfolder}`, i + 1]))
+          .flatMap(r => r.notebooks.map((n, i) => [`${r.dandiset_id}/${r.version}/${n.subfolder}`, i + 1]))
       );
+      console.log('--- qualResults', qualResults);
+      console.log('--- rankResults', rankResults);
       setQualResults(qualResults);
       setRankResults(rankResults);
     } catch (err) {

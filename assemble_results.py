@@ -107,6 +107,7 @@ def main():
                     "version": version,
                     "model": config["model"],
                     "prompt": config["prompt"],
+                    "subfolder": subfolder.name,
                     "metadata": metadata
                 })
 
