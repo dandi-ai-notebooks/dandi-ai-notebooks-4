@@ -1,157 +1,37 @@
 #!/usr/bin/env python
 
-from typing import List, Dict, Any, Tuple
+from typing import List, Tuple
 import os
 import json
 from pathlib import Path
-import math
-import itertools
+from scripts.helpers.bt_rank import rank_notebooks, suggest_next_comparison
 
 this_dir = Path(__file__).parent
 
-# --------------------------------------------------------------------------- #
-# Internal helper: one‐shot Bradley–Terry fit                                 #
-# --------------------------------------------------------------------------- #
-
-def _fit_bradley_terry(
-    nodes1: List[str],
-    nodes2: List[str],
-    selections: List[int],
-    all_nodes: List[str],
-    *,
-    alpha: float = 0.5,
-    max_iter: int = 1000,
-    tol: float = 1e-8,
-) -> Dict[str, float]:
+def rank_notebooks(*, nodes1: List[str], nodes2: List[str], selections: List[int], all_nodes: List[str]) -> List[str]:
     """
-    Return a mapping {notebook: ability θ} using MM updates with
-    Laplace smoothing (α pseudo‑wins) to avoid zero abilities.
+    Rank notebooks based on selections.
+
+    nodes1: List of first nodes in comparisons
+    nodes2: List of second nodes in comparisons
+    selections: List of selections (1 or 2)
+    all_nodes: List of all nodes to rank
+
+    Returns a list of nodes sorted by rank.
     """
-    if not (len(nodes1) == len(nodes2) == len(selections)):
-        raise ValueError("nodes1, nodes2 and selections must have equal length")
+    ...
 
-    items = set(all_nodes)
-    theta: Dict[str, float] = {i: 1.0 for i in items}            # initial skill
-
-    for _ in range(max_iter):
-        wins  = {i: alpha for i in items}                        # Laplace prior
-        denom = {i: 0.0   for i in items}
-
-        for a, b, s in zip(nodes1, nodes2, selections):
-            if s == 1:
-                wins[a] += 1
-            elif s == 2:
-                wins[b] += 1
-            else:
-                raise ValueError("selections must contain only 1 or 2")
-
-            inv = 1.0 / (theta[a] + theta[b])
-            denom[a] += inv
-            denom[b] += inv
-
-        new_theta = {
-            i: (wins[i] / denom[i] if denom[i] else theta[i])
-            for i in items
-        }
-
-        # Normalise:  mean θ = 1 to remove scale indeterminacy
-        mean_th = sum(new_theta.values()) / len(new_theta)
-        for i in items:
-            new_theta[i] /= mean_th or 1.0
-
-        # Convergence check
-        if max(abs(new_theta[i] - theta[i]) for i in items) < tol:
-            theta = new_theta
-            break
-        theta = new_theta
-
-    return theta
-
-
-# --------------------------------------------------------------------------- #
-# Public: rank notebooks                                                      #
-# --------------------------------------------------------------------------- #
-
-def rank_notebooks(
-    nodes1: List[str],
-    nodes2: List[str],
-    selections: List[int],
-    all_nodes: List[str],
-    *,
-    alpha: float = 0.5,
-    max_iter: int = 1000,
-    tol: float = 1e-8,
-) -> List[str]:
+def suggest_next_comparison(*, nodes1: List[str], nodes2: List[str], selections: List[int], all_nodes: List[str]) -> Tuple[str, str]:
     """
-    Return notebook identifiers sorted from *best* to *worst* estimated
-    ability.
+    Suggest the next comparison based on existing selections.
+    nodes1: List of first nodes in comparisons
+    nodes2: List of second nodes in comparisons
+    selections: List of selections (1 or 2)
+    all_nodes: List of all nodes to rank
 
-    See _fit_bradley_terry for the meaning of alpha / max_iter / tol.
+    Returns a tuple of two nodes to compare.
     """
-    if len(nodes1) == 0:
-        return []
-
-    theta = _fit_bradley_terry(nodes1, nodes2, selections, all_nodes=all_nodes,
-                               alpha=alpha, max_iter=max_iter, tol=tol)
-    return sorted(theta, key=theta.get, reverse=True)  # type: ignore[return-value]
-
-
-# --------------------------------------------------------------------------- #
-# Public: suggest the next comparison                                         #
-# --------------------------------------------------------------------------- #
-
-def suggest_next_comparison(
-    nodes1: List[str],
-    nodes2: List[str],
-    selections: List[int],
-    all_nodes: List[str],
-    *,
-    alpha: float = 0.5,
-    max_iter: int = 1000,
-    tol: float = 1e-8,
-) -> Tuple[str, str]:
-    """
-    Choose the pair (i, j) that maximises expected information gain,
-    measured by Shannon entropy of the Bradley–Terry win probability and
-    down‑weighted by how often the pair has already been compared.
-    """
-    if len(nodes1) == 0:          # nothing compared yet → any pair is fine
-        raise ValueError("At least one past comparison is required")
-
-    theta = _fit_bradley_terry(nodes1, nodes2, selections, all_nodes=all_nodes,
-                               alpha=alpha, max_iter=max_iter, tol=tol)
-
-    items = set(theta)
-    # Count how many times each unordered pair has been judged
-    pair_counts: Dict[frozenset, int] = {
-        frozenset({a, b}): 0 for a, b in itertools.combinations(items, 2)
-    }
-    for a, b in zip(nodes1, nodes2):
-        pair_counts[frozenset({a, b})] += 1
-
-    # Scan all possible new pairs
-    EPS = 1e-12
-    best_pair, best_score = None, -1.0
-    for i, j in itertools.combinations(items, 2):
-        denom = theta[i] + theta[j]
-        if denom < EPS:                 # both abilities ~0 → no information
-            continue
-
-        p_ij = theta[i] / denom
-        # Ignore pairs that are (almost) deterministic
-        if p_ij < EPS or (1 - p_ij) < EPS:
-            continue
-
-        entropy = -p_ij * math.log2(p_ij) - (1 - p_ij) * math.log2(1 - p_ij)
-        score   = entropy / (1 + pair_counts[frozenset({i, j})])
-
-        if score > best_score:
-            best_score, best_pair = score, (i, j)
-
-    if best_pair is None:
-        raise RuntimeError("All remaining pairs give zero expected gain; "
-                           "further comparisons will not improve the ranking.")
-    return best_pair
+    ...
 
 def process_dandiset(*, dandiset_id: str, version: str, review_model: str):
     dandiset_folder = f'{this_dir}/dandiset_repos/{dandiset_id}/v4/{version}'
