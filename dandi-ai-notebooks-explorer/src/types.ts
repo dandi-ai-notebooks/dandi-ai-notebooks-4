@@ -1,3 +1,15 @@
+export interface NotebookRecord {
+  dandiset_id: string;
+  version: string;
+  metadata: Metadata;
+  model: string;
+  prompt: string;
+  subfolder: string;
+  type: "notebook";
+  url: string;
+  veersion: string;
+}
+
 export interface Metadata {
   dandiset_id: string;
   version: string;
@@ -76,15 +88,7 @@ export type ReviewResultType = {
     wins: number;
     losses: number;
   }[];
-} | {
-  type: "notebook",
-  dandiset_id: string;
-  version: string;
-  subfolder: string;
-  model: string;
-  prompt: string;
-  metadata: Metadata;
-}
+} | NotebookRecord
 
 export interface ReviewResults {
   results: ReviewResultType[];

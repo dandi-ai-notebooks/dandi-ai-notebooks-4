@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { Metadata } from './types';
+import { Metadata, NotebookRecord } from './types';
 import {
   Table,
   TableBody,
@@ -25,7 +25,7 @@ type SortConfig = {
 };
 
 interface Props {
-  notebooks: Metadata[];
+  notebooks: NotebookRecord[];
   // critiques: Set<string>;
   // notebookGradings: NotebookGradingsData;
   qualResults: Map<string, boolean>;
@@ -51,7 +51,7 @@ export default function NotebooksTable({ notebooks, qualResults, rankResults, mo
   };
 
   const getPromptUrl = (prompt: string) => {
-    return `https://github.com/dandi-ai-notebooks/dandi-ai-notebooks-4/blob/main/scripts/templates/generate_notebook/${prompt}`;
+    return `https://github.com/dandi-ai-notebooks/dandi-ai-notebooks-4/blob/main/scripts/templates/generate_notebook/${prompt}.txt`;
   };
 
   const filteredAndSortedNotebooks = useMemo(() => {
@@ -77,17 +77,17 @@ export default function NotebooksTable({ notebooks, qualResults, rankResults, mo
           : bRank - aRank;
       }
 
-      let aValue = a[sortConfig.key as keyof Metadata];
-      let bValue = b[sortConfig.key as keyof Metadata];
+      let aValue: string | number = 0;
+      let bValue: string | number = 0;
 
       if (sortConfig.key === 'model') {
-        aValue = (aValue as string).split('/')[1] || '';
-        bValue = (bValue as string).split('/')[1] || '';
+        aValue = a.model.split('/')[1] || '';
+        bValue = b.model.split('/')[1] || '';
       }
 
       if (sortConfig.key === 'est_cost') {
-        aValue = calculateEstimatedCost(a) || 0;
-        bValue = calculateEstimatedCost(b) || 0;
+        aValue = calculateEstimatedCost(a.metadata) || 0;
+        bValue = calculateEstimatedCost(b.metadata) || 0;
       }
 
       if (typeof aValue === 'string' && typeof bValue === 'string') {
@@ -105,8 +105,6 @@ export default function NotebooksTable({ notebooks, qualResults, rankResults, mo
       return 0;
     });
   }, [notebooks, sortConfig, selectedDandiset, qualResults, rankResults]);
-
-  console.log('--- notebooks', notebooks);
 
   return (
     <div>
@@ -244,7 +242,7 @@ export default function NotebooksTable({ notebooks, qualResults, rankResults, mo
                     </Link>
                   </TableCell>
                   <TableCell>
-                    {calculateEstimatedCost(notebook)?.toFixed(2) || 'N/A'}
+                    {calculateEstimatedCost(notebook.metadata)?.toFixed(2) || 'N/A'}
                   </TableCell>
                   {/* <TableCell>
                     {critiqueUrls.cells && (

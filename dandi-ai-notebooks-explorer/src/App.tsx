@@ -8,7 +8,7 @@ import {
   Container,
   Typography
 } from '@mui/material';
-import { Metadata, ReviewResults, ReviewResultType } from './types';
+import { NotebookRecord, ReviewResults, ReviewResultType } from './types';
 import NotebooksTable from './NotebooksTable';
 import axios from 'axios';
 
@@ -19,7 +19,7 @@ const theme = createTheme({
 });
 
 function App() {
-  const [notebooks, setNotebooks] = useState<Metadata[]>([]);
+  const [notebooks, setNotebooks] = useState<NotebookRecord[]>([]);
   // const [critiques, setCritiques] = useState<Set<string>>(new Set());
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -39,7 +39,7 @@ function App() {
         'https://raw.githubusercontent.com/dandi-ai-notebooks/dandi-ai-notebooks-4/refs/heads/main/results.json'
       );
       const notebooks = reviewResultsResponse.data.results.filter(r => r.type === 'notebook');
-      setNotebooks(notebooks.map(nb => nb.metadata));
+      setNotebooks(notebooks);
       // setCritiques(new Set(critiquesResponse.data.files));
       // setNotebookGradings(gradingsResponse.data);
 
@@ -54,8 +54,6 @@ function App() {
           .filter((r): r is Extract<ReviewResultType, {type: 'rankings'}> => r.type === 'rankings')
           .flatMap(r => r.notebooks.map((n, i) => [`${r.dandiset_id}/${r.version}/${n.subfolder}`, i + 1]))
       );
-      console.log('--- qualResults', qualResults);
-      console.log('--- rankResults', rankResults);
       setQualResults(qualResults);
       setRankResults(rankResults);
     } catch (err) {
