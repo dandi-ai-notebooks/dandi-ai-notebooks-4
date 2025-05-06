@@ -74,7 +74,7 @@ def suggest_next_comparison(*,
                             nodes1: List[str],
                             nodes2: List[str],
                             selections: List[int],
-                            all_nodes: List[str]) -> Tuple[str, str]:
+                            all_nodes: List[str]) -> Tuple[Tuple[str, str] | None, float]:
     """
     Heuristic for the next most‑informative pair to compare.
 
@@ -95,20 +95,26 @@ def suggest_next_comparison(*,
     for i in range(n):
         for j in range(i + 1, n):
             if (i, j) not in compared:
-                return all_nodes[i], all_nodes[j]
+                return (all_nodes[i], all_nodes[j]), 0
 
-    # 2) Otherwise pick pair with abilities closest to each other ------------
+    # 2) Otherwise pick pair with abilities closest to each other that hasn't already been compared
     abilities = _fit_bt(nodes1, nodes2, selections, all_nodes)
     best_pair = None
     best_gap  = float("inf")
+    best_p_delta = 0  # difference in probabilities of winning
 
     for i in range(n):
         for j in range(i + 1, n):
+            if (i, j) in compared:
+                continue
             gap = abs(abilities[i] - abilities[j])
             if gap < best_gap:
                 best_gap, best_pair = gap, (all_nodes[i], all_nodes[j])
+                p_i = abilities[i] / (abilities[i] + abilities[j])
+                p_j = abilities[j] / (abilities[i] + abilities[j])
+                best_p_delta = abs(p_i - p_j)
 
     if best_pair is None:
-        raise RuntimeError("No best pair found, this should not happen")
+        return None, 0
 
-    return best_pair
+    return best_pair, best_p_delta

@@ -63,13 +63,19 @@ def process_dandiset(*, dandiset_id: str, version: str, review_model: str):
 
     # do 3 more comparisons (how do we know when to stop?)
     for aa in range(3):
-        next_pair = suggest_next_comparison(
+        next_pair, p_delta = suggest_next_comparison(
             nodes1=[i[0] for i in comparison_results],
             nodes2=[i[1] for i in comparison_results],
             selections=[i[2] for i in comparison_results],
             all_nodes=passing_subdirs
         )
-        print(f"Next pair to compare: {next_pair}")
+        if next_pair is None:
+            print("No more pairs to compare")
+            break
+        if p_delta > 0.2:
+            print(f"p_delta {p_delta} is high enough, stopping")
+            break
+        print(f"Next pair to compare: {next_pair} (p_delta {p_delta})")
         subdir1, subdir2 = next_pair
         comparison_fname = f'{review_folder}/{subdir1}/comparisons/{subdir2}/comparison.json'
         if not os.path.exists(comparison_fname):
