@@ -275,6 +275,7 @@
       "version": "0.250406.0045",
       "model": "google/gemini-2.0-flash-001",
       "prompt": "prompt-g-1",
+      "subfolder": "gemini-2.0-flash-001-prompt-g-1",
       "metadata": {
         "dandiset_id": "001361",
         "version": "0.250406.0045",
@@ -301,6 +302,7 @@
       "version": "0.250406.0045",
       "model": "google/gemini-2.5-pro-preview-03-25",
       "prompt": "prompt-f-1",
+      "subfolder": "gemini-2.5-pro-preview-03-25-prompt-f-1",
       "metadata": {
         "dandiset_id": "001361",
         "version": "0.250406.0045",
@@ -327,6 +329,7 @@
       "version": "0.250406.0045",
       "model": "openai/o4-mini-high",
       "prompt": "prompt-f-1",
+      "subfolder": "o4-mini-high-prompt-f-1",
       "metadata": {
         "dandiset_id": "001361",
         "version": "0.250406.0045",
@@ -353,6 +356,7 @@
       "version": "0.250406.0045",
       "model": "google/gemini-2.0-flash-001",
       "prompt": "prompt-e-1",
+      "subfolder": "gemini-2.0-flash-001-prompt-e-1",
       "metadata": {
         "dandiset_id": "001361",
         "version": "0.250406.0045",
@@ -379,6 +383,7 @@
       "version": "0.250406.0045",
       "model": "openai/o4-mini-high",
       "prompt": "prompt-e-1",
+      "subfolder": "o4-mini-high-prompt-e-1",
       "metadata": {
         "dandiset_id": "001361",
         "version": "0.250406.0045",
@@ -405,6 +410,7 @@
       "version": "0.250406.0045",
       "model": "google/gemini-2.5-pro-preview-03-25",
       "prompt": "prompt-g-1",
+      "subfolder": "gemini-2.5-pro-preview-03-25-prompt-g-1",
       "metadata": {
         "dandiset_id": "001361",
         "version": "0.250406.0045",
@@ -431,6 +437,7 @@
       "version": "0.250406.0045",
       "model": "openai/o4-mini-high",
       "prompt": "prompt-g-1",
+      "subfolder": "o4-mini-high-prompt-g-1",
       "metadata": {
         "dandiset_id": "001361",
         "version": "0.250406.0045",
@@ -457,6 +464,7 @@
       "version": "0.250406.0045",
       "model": "google/gemini-2.5-pro-preview-03-25",
       "prompt": "prompt-e-1",
+      "subfolder": "gemini-2.5-pro-preview-03-25-prompt-e-1",
       "metadata": {
         "dandiset_id": "001361",
         "version": "0.250406.0045",
@@ -483,6 +491,7 @@
       "version": "0.250406.0045",
       "model": "google/gemini-2.0-flash-001",
       "prompt": "prompt-f-1",
+      "subfolder": "gemini-2.0-flash-001-prompt-f-1",
       "metadata": {
         "dandiset_id": "001361",
         "version": "0.250406.0045",
