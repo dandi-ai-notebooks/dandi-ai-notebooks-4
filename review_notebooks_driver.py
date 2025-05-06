@@ -17,6 +17,7 @@ def _fit_bradley_terry(
     nodes1: List[str],
     nodes2: List[str],
     selections: List[int],
+    all_nodes: List[str],
     *,
     alpha: float = 0.5,
     max_iter: int = 1000,
@@ -29,7 +30,7 @@ def _fit_bradley_terry(
     if not (len(nodes1) == len(nodes2) == len(selections)):
         raise ValueError("nodes1, nodes2 and selections must have equal length")
 
-    items = set(nodes1) | set(nodes2)
+    items = set(all_nodes)
     theta: Dict[str, float] = {i: 1.0 for i in items}            # initial skill
 
     for _ in range(max_iter):
@@ -75,6 +76,7 @@ def rank_notebooks(
     nodes1: List[str],
     nodes2: List[str],
     selections: List[int],
+    all_nodes: List[str],
     *,
     alpha: float = 0.5,
     max_iter: int = 1000,
@@ -89,7 +91,7 @@ def rank_notebooks(
     if len(nodes1) == 0:
         return []
 
-    theta = _fit_bradley_terry(nodes1, nodes2, selections,
+    theta = _fit_bradley_terry(nodes1, nodes2, selections, all_nodes=all_nodes,
                                alpha=alpha, max_iter=max_iter, tol=tol)
     return sorted(theta, key=theta.get, reverse=True)  # type: ignore[return-value]
 
@@ -116,10 +118,10 @@ def suggest_next_comparison(
     if len(nodes1) == 0:          # nothing compared yet → any pair is fine
         raise ValueError("At least one past comparison is required")
 
-    theta = _fit_bradley_terry(nodes1, nodes2, selections,
+    theta = _fit_bradley_terry(nodes1, nodes2, selections, all_nodes=all_nodes,
                                alpha=alpha, max_iter=max_iter, tol=tol)
 
-    items = set(all_nodes)
+    items = set(theta)
     # Count how many times each unordered pair has been judged
     pair_counts: Dict[frozenset, int] = {
         frozenset({a, b}): 0 for a, b in itertools.combinations(items, 2)
@@ -249,7 +251,7 @@ def process_dandiset(*, dandiset_id: str, version: str, review_model: str):
         elif selection == 2:
             num_wins[subfolder2] += 1
             num_losses[subfolder1] += 1
-    ranked_notebooks = rank_notebooks(nodes1=nodes1, nodes2=nodes2, selections=selections)
+    ranked_notebooks = rank_notebooks(nodes1=nodes1, nodes2=nodes2, selections=selections, all_nodes=passing_subdirs)
     print(f"\nRanked notebooks for model dandiset {dandiset_id}:")
     for i, notebook in enumerate(ranked_notebooks):
         print(f"{i + 1}: {notebook} (wins: {num_wins[notebook]}, losses: {num_losses[notebook]})")
