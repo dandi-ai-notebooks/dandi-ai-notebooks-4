@@ -15,7 +15,8 @@ def process_qualification_test(file_path: str, rel_path: str) -> Dict:
         "type": "qualification_test",
         "model": paths[0],
         "dandiset_id": paths[2],
-        "subfolder": paths[3],
+        "version": paths[3],
+        "subfolder": paths[4],
         "passing": data.get("passing", False)
     }
 
@@ -28,8 +29,9 @@ def process_comparison_test(file_path: str, rel_path: str) -> Dict:
         "type": "comparison",
         "model": paths[0],
         "dandiset_id": paths[2],
-        "subfolder1": paths[3],
-        "subfolder2": paths[5],
+        "version": paths[3],
+        "subfolder1": paths[4],
+        "subfolder2": paths[6],
         "selection": data.get("selection")
     }
 
@@ -42,6 +44,7 @@ def process_rankings(file_path: str, rel_path: str) -> Dict:
         "type": "rankings",
         "model": paths[0],
         "dandiset_id": paths[2],
+        "version": paths[3],
         "notebooks": data.get("ranked_notebooks", [])
     }
 

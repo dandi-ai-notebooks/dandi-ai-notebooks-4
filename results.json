@@ -4,6 +4,7 @@
       "type": "rankings",
       "model": "claude-3.7-sonnet",
       "dandiset_id": "001361",
+      "version": "0.250406.0045",
       "notebooks": [
         {
           "subfolder": "gemini-2.0-flash-001-prompt-f-1",
@@ -21,29 +22,33 @@
       "type": "qualification_test",
       "model": "claude-3.7-sonnet",
       "dandiset_id": "001361",
-      "subfolder": "0.250406.0045",
+      "version": "0.250406.0045",
+      "subfolder": "gemini-2.0-flash-001-prompt-e-1",
       "passing": true
     },
     {
       "type": "comparison",
       "model": "claude-3.7-sonnet",
       "dandiset_id": "001361",
-      "subfolder1": "0.250406.0045",
-      "subfolder2": "comparisons",
+      "version": "0.250406.0045",
+      "subfolder1": "gemini-2.0-flash-001-prompt-e-1",
+      "subfolder2": "gemini-2.0-flash-001-prompt-f-1",
       "selection": 2
     },
     {
       "type": "qualification_test",
       "model": "claude-3.7-sonnet",
       "dandiset_id": "001361",
-      "subfolder": "0.250406.0045",
+      "version": "0.250406.0045",
+      "subfolder": "gemini-2.0-flash-001-prompt-f-1",
       "passing": true
     },
     {
       "type": "qualification_test",
       "model": "claude-3.7-sonnet",
       "dandiset_id": "001361",
-      "subfolder": "0.250406.0045",
+      "version": "0.250406.0045",
+      "subfolder": "gemini-2.0-flash-001-prompt-g-1",
       "passing": false
     },
     {
