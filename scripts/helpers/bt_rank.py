@@ -76,10 +76,7 @@ def suggest_next_comparison(*,
                             selections: List[int],
                             all_nodes: List[str]) -> Tuple[Tuple[str, str] | None, float]:
     """
-    Heuristic for the next most‑informative pair to compare.
-
-    – If an untried pair exists, return the first one encountered.
-    – Otherwise, return the pair whose current BT skill estimates are
+    Return the pair whose current BT skill estimates are
       closest (|rank difference| minimal), i.e. where our knowledge is
       most uncertain.
     """
@@ -91,13 +88,7 @@ def suggest_next_comparison(*,
         i, j = index[a], index[b]
         compared.add((min(i, j), max(i, j)))
 
-    # 1) Any still‑unseen pair? ----------------------------------------------
-    for i in range(n):
-        for j in range(i + 1, n):
-            if (i, j) not in compared:
-                return (all_nodes[i], all_nodes[j]), 0
-
-    # 2) Otherwise pick pair with abilities closest to each other that hasn't already been compared
+    # Pick pair with abilities closest to each other that hasn't already been compared
     abilities = _fit_bt(nodes1, nodes2, selections, all_nodes)
     best_pair = None
     best_gap  = float("inf")
