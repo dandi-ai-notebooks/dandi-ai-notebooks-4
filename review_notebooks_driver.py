@@ -9,46 +9,33 @@ import itertools
 
 this_dir = Path(__file__).parent
 
-def rank_notebooks(nodes1: List[str],
-                   nodes2: List[str],
-                   selections: List[int],
-                   *,
-                   max_iter: int = 1000,
-                   tol: float = 1e-8) -> List[str]:
+# --------------------------------------------------------------------------- #
+# Internal helper: one‐shot Bradley–Terry fit                                 #
+# --------------------------------------------------------------------------- #
+
+def _fit_bradley_terry(
+    nodes1: List[str],
+    nodes2: List[str],
+    selections: List[int],
+    *,
+    alpha: float = 0.5,
+    max_iter: int = 1000,
+    tol: float = 1e-8,
+) -> Dict[str, float]:
     """
-    Rank notebooks given pair‑wise outcomes using the Bradley‑Terry model.
-
-    Parameters
-    ----------
-    nodes1, nodes2 : List[str]
-        Paired notebook identifiers.  nodes1[i] competed against nodes2[i].
-    selections : List[int]
-        For each pair, 1 means nodes1[i] won, 2 means nodes2[i] won.
-    max_iter : int, optional
-        Maximum MM iterations (default 1000).
-    tol : float, optional
-        Convergence threshold on max parameter change (default 1e‑8).
-
-    Returns
-    -------
-    List[str]
-        Notebook names sorted from highest to lowest estimated ability.
+    Return a mapping {notebook: ability θ} using MM updates with
+    Laplace smoothing (α pseudo‑wins) to avoid zero abilities.
     """
     if not (len(nodes1) == len(nodes2) == len(selections)):
-        raise ValueError("nodes1, nodes2 and selections must be the same length")
+        raise ValueError("nodes1, nodes2 and selections must have equal length")
 
-    if len(nodes1) == 0:
-        return []
-
-    # All unique notebooks start with the same ability
     items = set(nodes1) | set(nodes2)
-    theta: Dict[str, float] = {item: 1.0 for item in items}
+    theta: Dict[str, float] = {i: 1.0 for i in items}            # initial skill
 
     for _ in range(max_iter):
-        wins  = {item: 0.0 for item in items}   # w_i
-        denom = {item: 0.0 for item in items}   # d_i
+        wins  = {i: alpha for i in items}                        # Laplace prior
+        denom = {i: 0.0   for i in items}
 
-        # accumulate wins and denominators
         for a, b, s in zip(nodes1, nodes2, selections):
             if s == 1:
                 wins[a] += 1
@@ -57,27 +44,59 @@ def rank_notebooks(nodes1: List[str],
             else:
                 raise ValueError("selections must contain only 1 or 2")
 
-            inv_sum = 1.0 / (theta[a] + theta[b])
-            denom[a] += inv_sum
-            denom[b] += inv_sum
+            inv = 1.0 / (theta[a] + theta[b])
+            denom[a] += inv
+            denom[b] += inv
 
-        # MM‑update: θ_i ← w_i / d_i   (leave θ_i unchanged if d_i == 0)
-        new_theta = {i: (wins[i] / denom[i] if denom[i] else theta[i])
-                     for i in items}
+        new_theta = {
+            i: (wins[i] / denom[i] if denom[i] else theta[i])
+            for i in items
+        }
 
-        # normalise for identifiability (mean θ = 1)
-        mean_theta = sum(new_theta.values()) / len(new_theta)
+        # Normalise:  mean θ = 1 to remove scale indeterminacy
+        mean_th = sum(new_theta.values()) / len(new_theta)
         for i in items:
-            new_theta[i] /= mean_theta or 1.0  # avoid division by 0
+            new_theta[i] /= mean_th or 1.0
 
-        # check convergence
+        # Convergence check
         if max(abs(new_theta[i] - theta[i]) for i in items) < tol:
             theta = new_theta
             break
         theta = new_theta
 
-    # sort by estimated ability (descending)
-    return sorted(theta.keys(), key=lambda k: theta[k], reverse=True)
+    return theta
+
+
+# --------------------------------------------------------------------------- #
+# Public: rank notebooks                                                      #
+# --------------------------------------------------------------------------- #
+
+def rank_notebooks(
+    nodes1: List[str],
+    nodes2: List[str],
+    selections: List[int],
+    *,
+    alpha: float = 0.5,
+    max_iter: int = 1000,
+    tol: float = 1e-8,
+) -> List[str]:
+    """
+    Return notebook identifiers sorted from *best* to *worst* estimated
+    ability.
+
+    See _fit_bradley_terry for the meaning of alpha / max_iter / tol.
+    """
+    if len(nodes1) == 0:
+        return []
+
+    theta = _fit_bradley_terry(nodes1, nodes2, selections,
+                               alpha=alpha, max_iter=max_iter, tol=tol)
+    return sorted(theta, key=theta.get, reverse=True)  # type: ignore[return-value]
+
+
+# --------------------------------------------------------------------------- #
+# Public: suggest the next comparison                                         #
+# --------------------------------------------------------------------------- #
 
 def suggest_next_comparison(
     nodes1: List[str],
