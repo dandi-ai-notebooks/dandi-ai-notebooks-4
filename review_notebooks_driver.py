@@ -87,6 +87,10 @@ def process_dandiset(*, dandiset_id: str, version: str, review_model: str):
     subdirs = [f for f in os.listdir(dandiset_folder) if os.path.isdir(os.path.join(dandiset_folder, f))]
     passing_subdirs = []
     for subdir in subdirs:
+        notebook_fname = f'{dandiset_folder}/{subdir}/{dandiset_id}.ipynb'
+        if not os.path.exists(notebook_fname):
+            print(f"Notebook file {notebook_fname} does not exist. Skipping.")
+            continue
         qualification_test_fname = f'{review_folder}/{subdir}/qualification_test.json'
         if os.path.exists(qualification_test_fname):
             print(f"Qualification test file {qualification_test_fname} exists")
