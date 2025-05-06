@@ -1,9 +1,11 @@
 #!/usr/bin/env python
 
-from typing import List, Dict
+from typing import List, Dict, Any, Tuple
 import os
 import json
 from pathlib import Path
+import math
+import itertools
 
 this_dir = Path(__file__).parent
 
@@ -77,6 +79,83 @@ def rank_notebooks(nodes1: List[str],
     # sort by estimated ability (descending)
     return sorted(theta.keys(), key=lambda k: theta[k], reverse=True)
 
+def suggest_next_comparison(nodes1: List[str],
+                            nodes2: List[str],
+                            selections: List[int],
+                            *,
+                            max_iter: int = 1000,
+                            tol: float = 1e-8) -> Tuple[str, str]:
+    """
+    Pick the next pair of notebooks to compare so that the expected
+    information gain about the ranking is maximised.
+
+    Parameters
+    ----------
+    nodes1, nodes2, selections
+        The same three lists you feed to `rank_notebooks`.
+    max_iter, tol
+        Passed straight through to the internal Bradley–Terry fit.
+
+    Returns
+    -------
+    (str, str)
+        The two notebook identifiers that should be compared next.
+    """
+    # ---------- 1.  Fit Bradley–Terry once to get θ --------------------------
+    items = set(nodes1) | set(nodes2)
+    theta: Dict[str, float] = {i: 1.0 for i in items}
+
+    for _ in range(max_iter):
+        wins  = {i: 0.0 for i in items}
+        denom = {i: 0.0 for i in items}
+
+        for a, b, s in zip(nodes1, nodes2, selections):
+            if s == 1:
+                wins[a] += 1
+            elif s == 2:
+                wins[b] += 1
+            else:
+                raise ValueError("selections must contain only 1 or 2")
+
+            inv = 1.0 / (theta[a] + theta[b])
+            denom[a] += inv
+            denom[b] += inv
+
+        new_theta = {i: (wins[i] / denom[i] if denom[i] else theta[i])
+                     for i in items}
+
+        mean_theta = sum(new_theta.values()) / len(new_theta)
+        for i in items:
+            new_theta[i] /= mean_theta or 1.0
+
+        if max(abs(new_theta[i] - theta[i]) for i in items) < tol:
+            theta = new_theta
+            break
+        theta = new_theta
+
+    # ---------- 2.  Count how often each pair has already been compared ------
+    pair_counts: Dict[frozenset, int] = {
+        frozenset({a, b}): 0 for a, b in itertools.combinations(items, 2)
+    }
+    for a, b in zip(nodes1, nodes2):
+        pair_counts[frozenset({a, b})] += 1
+
+    # ---------- 3.  Score every candidate pair ------------------------------
+    best_pair, best_score = None, -1.0
+    for i, j in itertools.combinations(items, 2):
+        p_ij = theta[i] / (theta[i] + theta[j])
+        if p_ij in (0.0, 1.0):            # zero entropy: skip deterministic pairs
+            continue
+        entropy = -p_ij * math.log2(p_ij) - (1 - p_ij) * math.log2(1 - p_ij)
+        score   = entropy / (1 + pair_counts[frozenset({i, j})])
+        if score > best_score:
+            best_score, best_pair = score, (i, j)
+
+    if best_pair is None:
+        raise RuntimeError("All remaining pairs are deterministic; "
+                           "additional comparisons won’t change the ranking.")
+    return best_pair
+
 def process_dandiset(*, dandiset_id: str, version: str, review_model: str):
     dandiset_folder = f'{this_dir}/dandiset_repos/{dandiset_id}/v4/{version}'
     if not os.path.exists(dandiset_folder):
@@ -122,17 +201,6 @@ def process_dandiset(*, dandiset_id: str, version: str, review_model: str):
             if i1 >= i2:
                 continue
             comparison_fname = f'{review_folder}/{subdir1}/comparisons/{subdir2}/comparison.json'
-            if not os.path.exists(comparison_fname):
-                pass
-                # cmd = f'./scripts/comparison.py --dandiset_id {dandiset_id} --version {version} --model {review_model} --subfolder1_name {subdir1} --subfolder2_name {subdir2}'
-                # print(f"Running command: {cmd}")
-                # result = os.system(cmd)
-                # if result != 0:
-                #     raise RuntimeError(f"Failed to run command: {cmd}")
-                # if not os.path.exists(comparison_fname):
-                #     raise RuntimeError(f"Comparison file {comparison_fname} does not exist even after running the command")
-            else:
-                print(f"Comparison file {comparison_fname} exists")
             if os.path.exists(comparison_fname):
                 with open(comparison_fname, 'r') as f:
                     comparison = json.load(f)
@@ -140,6 +208,32 @@ def process_dandiset(*, dandiset_id: str, version: str, review_model: str):
                 comparison_results.append((
                     subdir1, subdir2, selection
                 ))
+
+    # do 3 more comparisons (how do we know when to stop?)
+    for aa in range(3):
+        next_pair = suggest_next_comparison(
+            nodes1=[i[0] for i in comparison_results],
+            nodes2=[i[1] for i in comparison_results],
+            selections=[i[2] for i in comparison_results]
+        )
+        print(f"Next pair to compare: {next_pair}")
+        subdir1, subdir2 = next_pair
+        comparison_fname = f'{review_folder}/{subdir1}/comparisons/{subdir2}/comparison.json'
+        if not os.path.exists(comparison_fname):
+            cmd = f'./scripts/comparison.py --dandiset_id {dandiset_id} --version {version} --model {review_model} --subfolder1_name {subdir1} --subfolder2_name {subdir2}'
+            print(f"Running command: {cmd}")
+            result = os.system(cmd)
+            if result != 0:
+                raise RuntimeError(f"Failed to run command: {cmd}")
+            if not os.path.exists(comparison_fname):
+                raise RuntimeError(f"Comparison file {comparison_fname} does not exist even after running the command")
+        with open(comparison_fname, 'r') as f:
+            comparison = json.load(f)
+            selection = comparison['selection']
+            comparison_results.append((
+                subdir1, subdir2, selection
+            ))
+
     nodes1 = []
     nodes2 = []
     selections = []
