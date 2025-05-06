@@ -8,31 +8,6 @@ from scripts.helpers.bt_rank import rank_notebooks, suggest_next_comparison
 
 this_dir = Path(__file__).parent
 
-def rank_notebooks(*, nodes1: List[str], nodes2: List[str], selections: List[int], all_nodes: List[str]) -> List[str]:
-    """
-    Rank notebooks based on selections.
-
-    nodes1: List of first nodes in comparisons
-    nodes2: List of second nodes in comparisons
-    selections: List of selections (1 or 2)
-    all_nodes: List of all nodes to rank
-
-    Returns a list of nodes sorted by rank.
-    """
-    ...
-
-def suggest_next_comparison(*, nodes1: List[str], nodes2: List[str], selections: List[int], all_nodes: List[str]) -> Tuple[str, str]:
-    """
-    Suggest the next comparison based on existing selections.
-    nodes1: List of first nodes in comparisons
-    nodes2: List of second nodes in comparisons
-    selections: List of selections (1 or 2)
-    all_nodes: List of all nodes to rank
-
-    Returns a tuple of two nodes to compare.
-    """
-    ...
-
 def process_dandiset(*, dandiset_id: str, version: str, review_model: str):
     dandiset_folder = f'{this_dir}/dandiset_repos/{dandiset_id}/v4/{version}'
     if not os.path.exists(dandiset_folder):
