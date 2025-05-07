@@ -101,6 +101,12 @@ def process_dandiset(*, dandiset_id: str, version: str, review_model: str):
         with open(comparison_fname, 'r') as f:
             comparison = json.load(f)
             selection = comparison['selection']
+            if selection == 1:
+                print(f"Selected {subdir1} over {subdir2}")
+            elif selection == 2:
+                print(f"Selected {subdir2} over {subdir1}")
+            else:
+                raise RuntimeError(f"Invalid selection {selection} for comparison between {subdir1} and {subdir2}")
             comparison_results.append((
                 subdir1, subdir2, selection
             ))
