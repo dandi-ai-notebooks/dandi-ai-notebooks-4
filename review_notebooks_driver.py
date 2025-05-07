@@ -61,8 +61,7 @@ def process_dandiset(*, dandiset_id: str, version: str, review_model: str):
                     subdir1, subdir2, selection
                 ))
 
-    # do 3 more comparisons (how do we know when to stop?)
-    for aa in range(3):
+    while True:
         next_pair = suggest_next_comparison(
             nodes1=[i[0] for i in comparison_results],
             nodes2=[i[1] for i in comparison_results],
