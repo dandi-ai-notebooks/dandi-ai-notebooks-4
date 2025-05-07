@@ -141,6 +141,17 @@ def process_dandiset(*, dandiset_id: str, version: str, review_model: str):
             ]
         }, f, indent=4)
 
+    comparisons_md_fname = f'{review_folder}/comparisons.md'
+    # Create comparisons.md
+    print(f"\nWriting comparisons to markdown file...")
+    with open(comparisons_md_fname, 'w') as f:
+        f.write(f'# Comparisons for DANDI:{dandiset_id} {version}\n\n')
+        f.write(f'Review model: {review_model}\n\n')
+        f.write('| Notebook 1 | Notebook 2 | Selection |\n')
+        f.write('|------------|------------|----------|\n')
+        for subfolder1, subfolder2, selection in comparison_results:
+            json_path = f'{subfolder1}/comparisons/{subfolder2}/comparison_thinking.md'
+            f.write(f'| {subfolder1} | {subfolder2} | [{selection}]({json_path}) |\n')
 
 def main():
     review_model = "anthropic/claude-3.7-sonnet"
