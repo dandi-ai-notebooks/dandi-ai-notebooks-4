@@ -52,13 +52,21 @@ def process_dandiset(*, dandiset_id: str, version: str, review_model: str):
         for i2, subdir2 in enumerate(passing_subdirs):
             if i1 >= i2:
                 continue
-            comparison_fname = f'{review_folder}/{subdir1}/comparisons/{subdir2}/comparison.json'
-            if os.path.exists(comparison_fname):
-                with open(comparison_fname, 'r') as f:
+            comparison_fname_A = f'{review_folder}/{subdir1}/comparisons/{subdir2}/comparison.json'
+            comparison_fname_B = f'{review_folder}/{subdir2}/comparisons/{subdir1}/comparison.json'
+            if os.path.exists(comparison_fname_A):
+                with open(comparison_fname_A, 'r') as f:
                     comparison = json.load(f)
                 selection = comparison['selection']
                 comparison_results.append((
                     subdir1, subdir2, selection
+                ))
+            elif os.path.exists(comparison_fname_B):
+                with open(comparison_fname_B, 'r') as f:
+                    comparison = json.load(f)
+                selection = comparison['selection']
+                comparison_results.append((
+                    subdir1, subdir2, 3 - selection
                 ))
 
     while True:
@@ -80,6 +88,9 @@ def process_dandiset(*, dandiset_id: str, version: str, review_model: str):
         comparison_fname = f'{review_folder}/{subdir1}/comparisons/{subdir2}/comparison.json'
         if os.path.exists(comparison_fname):
             raise RuntimeError(f"Comparison file {comparison_fname} already exists")
+        comparison_fname_other_way_around = f'{review_folder}/{subdir2}/comparisons/{subdir1}/comparison.json'
+        if os.path.exists(comparison_fname_other_way_around):
+            raise RuntimeError(f"Comparison file {comparison_fname_other_way_around} already exists (other way around)")
         cmd = f'./scripts/comparison.py --dandiset_id {dandiset_id} --version {version} --model {review_model} --subfolder1_name {subdir1} --subfolder2_name {subdir2}'
         print(f"Running command: {cmd}")
         result = os.system(cmd)
