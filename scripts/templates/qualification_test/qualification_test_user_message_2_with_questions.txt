@@ -40,7 +40,7 @@ PASS: Yes, the notebook shows how to visualize data from an NWB file
 FAIL: No, the notebook does not show how to do this
 
 question_id: visualization-issues
-Were there any major issues with the visualizations in the notebook (e.g., missing data, very poor formatting, or uninterpretable displays)?
+Were there any major issues with the visualizations in the notebook (e.g., missing data, all zeros data, very poor formatting, or uninterpretable displays)?
 PASS: No, there were no major issues with any of the visualizations
 FAIL: Yes, there were major issues with one or more visualizations
 

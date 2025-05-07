@@ -42,7 +42,7 @@
     },
     {
       "id": "visualization-issues",
-      "text": "Were there any major issues with the visualizations in the notebook (e.g., missing data, very poor formatting, or uninterpretable displays)?",
+      "text": "Were there any major issues with the visualizations in the notebook (e.g., missing data, all zeros data, very poor formatting, or uninterpretable displays)?",
       "options": [
         { "value": "PASS", "label": "No, there were no major issues with any of the visualizations" },
         { "value": "FAIL", "label": "Yes, there were major issues with one or more visualizations" }
