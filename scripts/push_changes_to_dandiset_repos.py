@@ -37,7 +37,7 @@ def get_user_confirmation():
 def ensure_gitignore(repo_path):
     """Ensure .gitignore exists with required entries"""
     gitignore_path = os.path.join(repo_path, '.gitignore')
-    required_entries = ['__pycache__', 'core.*']
+    required_entries = ['__pycache__', 'core.*', '.ipynb_checkpoints']
 
     # Read existing entries or create new file
     if os.path.exists(gitignore_path):
