@@ -1,15 +1,43 @@
-Based on the above, please provide a qualification grading for the above notebook. This will determine whether the notebook will be eligible to be used as an introductory notebook to the dandiset.
+Based on the above notebook and image descriptions, you are now going to determine whether this notebook is suitable for use as an introductory notebook to the dandiset.
 
-You will respond with a series of XML blocks of the form
+You must be strict. Do not be overly positive. If even one of the below criteria are not met, then you should FAIL the notebook. Many notebooks will be evaluated, and we need to be able to weed out the ones that are less than satisfactory. If you are uncertain or on the fence about whether or not a criteria is met, then you should FAIL the notebook.
 
-<grade>
-<question_id>ID</question_id>
+Here are the criteria for passing:
+
+1. The notebook must contain a description of the dandiset.
+
+2. The notebook must show how to use the DANDI API to access metadata for the dandiset and list some of the files.
+
+3. The notebook must show how to access metadata for an NWB file in the dandiset.
+
+4. The notebook must show how to visualize data from an NWB file in the dandiset.
+
+5. None of the plots should have any major issues. The following would be considered a major issue in a plot:
+- missing data
+- all zeros data
+- poor formatting leading to uninterpretable displays
+- serious mistakes in the plot
+Even if the plot looks technically correct, if it doesn't contribute to the reader's understanding of the data, then it is a major issue. For example, if the data are all zeros, it's usually not helpful to show that.
+
+6. The notebook must not have any major interpretations or conclusions that are not supported by the data provided.
+
+7. The output cells must be present wherever expected. Unexpectedly empty output cells indicates that the notebook did not run. The notebook needs to have been executed in order to be considered a pass.
+
+8. The notebook must not generate fake or simulated data as a replacement for actually loading data from the dandiset.
+
+9. The notebook must not have major errors in cell execution (warnings are okay).
+
+10. The notebook must not have any other major problems that would prevent it from being used as an introductory notebook to the dandiset.
+
+You will respond with an XML block of the form
+
+<review>
 <thinking>Your rationale for the grade</thinking>
 <grade>PASS|FAIL</grade>
-</grade>
+</review>
 
-where ID is the ID of the question (e.g., dandiset-description, dandiset-metadata, ...), and the grade determines whether the notebook passes or fails based on that criteria.
+If all the above criteria are met, then respond with a PASS grade. Otherwise respond with a FAIL grade. Be sure to justify your response in the thinking block.
 
-Do not include any other text in your response. Just the XML blocks.
+Do not include any other text in your response. Just the XML block.
 
 Note: Warnings in the output cells should not be considered to be problems unless they relate to other problems with the notebook.

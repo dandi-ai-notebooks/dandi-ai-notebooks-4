@@ -5,7 +5,6 @@ import os
 import time
 import platform
 import json
-import xml.etree.ElementTree as ET
 from pathlib import Path
 from helpers.run_completion import run_completion
 from html import escape as html_escape
@@ -88,7 +87,7 @@ def escape_xml_chars(xml_text: str) -> str:
     """
     _ALLOWED_TAGS = [
         '<grade>', '</grade>',
-        '<question_id>', '</question_id>',
+        '<review>', '</review>',
         '<thinking>', '</thinking>',
     ]
     _PLACEHOLDER = '__TAG_{:02d}__'
@@ -106,76 +105,31 @@ def escape_xml_chars(xml_text: str) -> str:
 
     return _PLACEHOLDER_RE.sub(_restore, xml_text)
 
-def parse_grades_xml(xml_text: str, *, question_ids: List[str]) -> List[dict]:
-    """Parse grades from XML text into a list of GradeBlock objects.
-
-    Args:
-        xml_text: String containing XML grade blocks
-
-    Returns:
-        List of parsed GradeBlock objects
-
-    Raises:
-        XMLParsingError: If XML is malformed or missing required elements
-    """
-    try:
-        # Escape < and > characters not part of our tags before wrapping
-        escaped_xml = escape_xml_chars(xml_text)
-        # Wrap in root element for parsing multiple grade blocks
-        wrapped_xml = f"<grades>{escaped_xml}</grades>"
-        root = ET.fromstring(wrapped_xml)
-
-        grades: List[dict] = []
-        for grade_elem in root.findall('grade'):
-            question_id = ''
-            thinking = ''
-            grade_str = ""
-
-            for child in grade_elem:
-                if child.tag == 'question_id':
-                    question_id = child.text.strip() if child.text else ''
-                elif child.tag == 'thinking':
-                    thinking = child.text.strip() if child.text else ''
-                elif child.tag == 'grade':
-                    grade_str = child.text.strip().upper() if child.text else ''
-            if not question_id:
-                raise XMLParsingError("Missing question_id in grade block")
-            if not grade_str:
-                raise XMLParsingError("Missing grade in grade block")
-            if not thinking:
-                raise XMLParsingError("Missing thinking in grade block")
-            if grade_str not in ["PASS", "FAIL"]:
-                raise XMLParsingError(f"Invalid grade value: {grade_str}")
-            grades.append({
-                "question_id": question_id,
-                "grade": grade_str,
-                "thinking": thinking,
-            })
-
-        # check that the number of grades equals the number of questions
-        if len(grades) != len(question_ids):
-            raise XMLParsingError(f"Number of grades ({len(grades)}) does not match number of questions ({len(question_ids)})")
-        # check that the question IDs match
-        for grade in grades:
-            q = grade["question_id"]
-            if not q in question_ids:
-                raise XMLParsingError(f"Question ID {q} not found in expected question IDs")
-
-        return grades
-
-    except ET.ParseError as e:
-        raise XMLParsingError(f"Invalid XML format: {str(e)}")
-
-def get_question_ids() -> List[str]:
-    p = read_template_prompt("qualification_test_user_message_2_with_questions.txt")
-    # each question has a line of the form
-    # question_id: <question_id>
-    ret = []
-    for line in p.splitlines():
-        if line.startswith("question_id:"):
-            _, question_id = line.split(":", 1)
-            ret.append(question_id.strip())
-    return ret
+def parse_review_xml(xml_text: str):
+    # Escape < and > characters not part of our tags before wrapping
+    escaped_xml = escape_xml_chars(xml_text)
+    i1 = escaped_xml.find("<review>")
+    i2 = escaped_xml.find("</review>")
+    if i1 == -1 or i2 == -1:
+        raise XMLParsingError("Invalid response text: <review> tag not found")
+    review_text = escaped_xml[i1 + len("<review>"):i2].strip()
+    i1 = review_text.find("<thinking>")
+    i2 = review_text.find("</thinking>")
+    if i1 == -1 or i2 == -1:
+        raise XMLParsingError("Invalid response text: <thinking> tag not found")
+    thinking = review_text[i1 + len("<thinking>"):i2].strip()
+    i1 = review_text.find("<grade>")
+    i2 = review_text.find("</grade>")
+    if i1 == -1 or i2 == -1:
+        raise XMLParsingError("Invalid response text: <grade> tag not found")
+    grade_text = review_text[i1 + len("<grade>"):i2].strip().upper()
+    if grade_text not in ["PASS", "FAIL"]:
+        raise XMLParsingError(f"Invalid grade text: {grade_text}")
+    if grade_text == "PASS":
+        passing = True
+    else:
+        passing = False
+    return passing, thinking
 
 def run_qualification_test_for_notebook(*, notebook_path: str, model: str):
     with open(notebook_path, 'r') as f:
@@ -217,7 +171,7 @@ def run_qualification_test_for_notebook(*, notebook_path: str, model: str):
     total_completion_tokens += completion_tokens
     messages = new_messages # very important to update messages with the new messages from the model
 
-    user_message_2 = read_template_prompt("qualification_test_user_message_2_with_questions.txt")
+    user_message_2 = read_template_prompt("qualification_test_user_message_2.txt")
     messages.append(
         {
             "role": "user",
@@ -233,23 +187,17 @@ def run_qualification_test_for_notebook(*, notebook_path: str, model: str):
 
     # Parse rankings text into structured format
     try:
-        grades = parse_grades_xml(qualification_test_response, question_ids=get_question_ids())
+        passing, thinking = parse_review_xml(qualification_test_response)
     except XMLParsingError as e:
         print(f"Error parsing grades: {str(e)}")
         print(qualification_test_response)
         raise Exception(f"Failed to parse grades: {str(e)}")
 
-    passing = True
-    for grade in grades:
-        if grade["grade"] != "PASS":
-            passing = False
-            break
-
     return {
         "image_descriptions": image_descriptions,
         "total_prompt_tokens": total_prompt_tokens,
         "total_completion_tokens": total_completion_tokens,
-        "grades": grades,
+        "thinking": thinking,
         "passing": passing,
         "metadata": {
             "model": model,
@@ -291,14 +239,14 @@ def main():
         result = run_qualification_test(model=model, dandiset_id=dandiset_id, version=version, subfolder_name=subfolder_name)
         with open(test_result_path, 'w') as f:
             json.dump(result, f, indent=4)
+        thinking_output_path = f'{this_dir}/../reviews/{model_second_part}/dandisets/{dandiset_id}/{version}/{subfolder_name}/qualification_test_thinking.md'
+        with open(thinking_output_path, 'w') as f:
+            f.write(result["thinking"])
     print("Image Descriptions:")
     print(result["image_descriptions"])
     print("")
-    print(f"Grades for {dandiset_id} / {version} / {subfolder_name}:")
-    for grade in result["grades"]:
-        print(f"Question {grade['question_id']}: {grade['grade']}")
-        print(f"Thinking: {grade['thinking']}")
-        print("")
+    print("Thinking:")
+    print(result["thinking"])
     print("")
     print("Passing:", result["passing"])
     print("")

@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 
-from typing import List, Tuple
 import os
 import json
 from pathlib import Path
@@ -35,13 +34,8 @@ def process_dandiset(*, dandiset_id: str, version: str, review_model: str):
             raise RuntimeError(f"Qualification test file {qualification_test_fname} does not exist even after running the command")
         with open(qualification_test_fname, 'r') as f:
             qualification_test = json.load(f)
-            grades = qualification_test['grades']
-            all_passing = True
-            for grade in grades:
-                if grade['grade'] != 'PASS':
-                    all_passing = False
-                    break
-            if all_passing:
+            passing = qualification_test['passing']
+            if passing:
                 passing_subdirs.append(subdir)
     print(f"Passing subdirs for {dandiset_id} {version}: {passing_subdirs}")
     # be sure they are sorted

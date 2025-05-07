@@ -1,5 +1,7 @@
 Please provide a detailed description of each of the images in the above notebook.
 
+Do not include any images that should have been created but were not. In other words, only provide information about actual images that were attached.
+
 For each image/figure, please provide:
 - an overview of what the figure shows
 - any minor issues with the figure (e.g., formatting, axes labels, etc.)
