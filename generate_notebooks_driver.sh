@@ -45,6 +45,19 @@ PROMPT=prompt-g-1
 ./scripts/generate_notebook.py --dandiset_id $DANDISET_ID --version $VERSION --model $MODEL --prompt $PROMPT
 
 
+MODEL=anthropic/claude-3.7-sonnet
+
+PROMPT=prompt-e-1
+./scripts/generate_notebook.py --dandiset_id $DANDISET_ID --version $VERSION --model $MODEL --prompt $PROMPT
+
+PROMPT=prompt-f-1
+./scripts/generate_notebook.py --dandiset_id $DANDISET_ID --version $VERSION --model $MODEL --prompt $PROMPT
+
+PROMPT=prompt-g-1
+./scripts/generate_notebook.py --dandiset_id $DANDISET_ID --version $VERSION --model $MODEL --prompt $PROMPT
+
+
+
 MODEL=deepseek/deepseek-chat-v3-0324
 
 PROMPT=prompt-e-1
