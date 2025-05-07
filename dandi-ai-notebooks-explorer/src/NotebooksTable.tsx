@@ -285,7 +285,7 @@ export default function NotebooksTable({ notebooks, qualResults, rankResults, mo
                   <TableCell>
                     {qualResults.get(`${notebook.dandiset_id}/${notebook.version}/${notebook.subfolder}`) !== undefined ? (
                       <Link
-                        href={`https://github.com/dandi-ai-notebooks/dandi-ai-notebook-reviews/blob/main/reviews/${modelForReviews}/dandisets/${notebook.dandiset_id}/${notebook.subfolder}/qualification_test.json`}
+                        href={`https://github.com/dandi-ai-notebooks/dandi-ai-notebooks-4/blob/main/reviews/${modelForReviews}/dandisets/${notebook.dandiset_id}/${notebook.version}/${notebook.subfolder}/qualification_test.json`}
                         target="_blank"
                         rel="noopener noreferrer"
                       >
@@ -297,7 +297,7 @@ export default function NotebooksTable({ notebooks, qualResults, rankResults, mo
                   </TableCell>
                   <TableCell>
                     <Link
-                      href={`https://github.com/dandi-ai-notebooks/dandi-ai-notebook-reviews/blob/main/reviews/${modelForReviews}/dandisets/${notebook.dandiset_id}/comparisons.md`}
+                      href={`https://github.com/dandi-ai-notebooks/dandi-ai-notebooks-4/blob/main/reviews/${modelForReviews}/dandisets/${notebook.dandiset_id}/${notebook.version}/comparisons.md`}
                       target="_blank"
                       rel="noopener noreferrer"
                     >
