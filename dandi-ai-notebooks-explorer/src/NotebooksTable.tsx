@@ -220,7 +220,7 @@ export default function NotebooksTable({ notebooks, qualResults, rankResults, mo
                 >
                   <TableCell>
                     <Link
-                      href={`https://github.com/dandi-ai-notebooks/${notebook.dandiset_id}/blob/main/${notebook.subfolder}/${notebook.dandiset_id}.ipynb`}
+                      href={notebook.url}
                       target="_blank"
                       rel="noopener noreferrer"
                     >
