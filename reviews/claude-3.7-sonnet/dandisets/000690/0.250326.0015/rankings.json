@@ -1,24 +1,49 @@
 {
     "ranked_notebooks": [
         {
-            "subfolder": "gemini-2.5-pro-preview-03-25-prompt-e-1",
-            "wins": 2,
+            "subfolder": "gemini-2.5-pro-preview-03-25-prompt-g-1",
+            "wins": 4,
             "losses": 0
         },
         {
-            "subfolder": "gemini-2.0-flash-001-prompt-g-1",
-            "wins": 2,
+            "subfolder": "gemini-2.5-pro-preview-03-25-prompt-e-1",
+            "wins": 5,
             "losses": 1
+        },
+        {
+            "subfolder": "o4-mini-high-prompt-g-1",
+            "wins": 4,
+            "losses": 3
+        },
+        {
+            "subfolder": "gemini-2.5-pro-preview-03-25-prompt-f-1",
+            "wins": 3,
+            "losses": 3
+        },
+        {
+            "subfolder": "o4-mini-high-prompt-e-1",
+            "wins": 3,
+            "losses": 3
+        },
+        {
+            "subfolder": "gemini-2.0-flash-001-prompt-g-1",
+            "wins": 3,
+            "losses": 4
+        },
+        {
+            "subfolder": "o4-mini-high-prompt-f-1",
+            "wins": 2,
+            "losses": 4
         },
         {
             "subfolder": "gemini-2.0-flash-001-prompt-f-1",
             "wins": 1,
-            "losses": 2
+            "losses": 4
         },
         {
             "subfolder": "gemini-2.0-flash-001-prompt-e-1",
             "wins": 0,
-            "losses": 2
+            "losses": 3
         }
     ]
 }
