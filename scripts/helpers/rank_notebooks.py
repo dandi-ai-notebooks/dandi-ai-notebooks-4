@@ -114,10 +114,10 @@ def suggest_next_comparison(*,
         node2 = ranked_nodes[i + 1]
         comparison_has_been_made = False
         for a in range(len(nodes1)):
-            if nodes1[a] == node1 and nodes2[a] == node2
+            if nodes1[a] == node1 and nodes2[a] == node2:
                 comparison_has_been_made = True
                 break
-            if nodes1[a] == node2 and nodes2[a] == node1
+            if nodes1[a] == node2 and nodes2[a] == node1:
                 comparison_has_been_made = True
                 break
         if not comparison_has_been_made:
