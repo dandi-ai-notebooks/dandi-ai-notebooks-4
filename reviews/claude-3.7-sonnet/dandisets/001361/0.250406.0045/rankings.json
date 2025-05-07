@@ -22,23 +22,28 @@
         },
         {
             "subfolder": "o4-mini-high-prompt-g-1",
-            "wins": 2,
+            "wins": 3,
             "losses": 3
         },
         {
             "subfolder": "gemini-2.0-flash-001-prompt-e-1",
-            "wins": 2,
+            "wins": 3,
             "losses": 5
+        },
+        {
+            "subfolder": "gemini-2.0-flash-001-prompt-g-1",
+            "wins": 2,
+            "losses": 2
         },
         {
             "subfolder": "o4-mini-high-prompt-e-1",
             "wins": 1,
-            "losses": 6
+            "losses": 7
         },
         {
             "subfolder": "o4-mini-high-prompt-f-1",
             "wins": 0,
-            "losses": 5
+            "losses": 6
         }
     ]
 }
