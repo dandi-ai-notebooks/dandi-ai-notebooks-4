@@ -60,7 +60,7 @@ def rank_notebooks(*,
             ai, aj = a[i], a[j]
             exp_ai, exp_aj = math.exp(ai), math.exp(aj)
             denom = exp_ai + exp_aj
-            p_i_win = exp_ai / denom                      # model prob that i wins
+            p_i_win = exp_ai / denom                      # modegl prob that i wins
             y_i = 1.0 if outcome == 1 else 0.0            # observed result
 
             # ∂ℓ/∂a_i = y_i − p_i_win      ,  ∂ℓ/∂a_j = (1−y_i) − (1−p_i_win)
@@ -94,7 +94,7 @@ def suggest_next_comparison(*,
                             all_nodes: List[str]) -> Tuple[str, str] | None:
     """
     Return the pair for next comparison or None if all comparisons are done.
-    We continue until every node has been compared with its ranked neighbors
+    We continue until every node has been compared with its ranked neighbors (2 on either side)
     """
     ranked_nodes = rank_notebooks(
         nodes1=nodes1,
@@ -105,23 +105,26 @@ def suggest_next_comparison(*,
     num_comparisons_by_node = {}
     for node in all_nodes:
         num_comparisons_by_node[node] = 0
-    for i in range(len(nodes1)):
-        num_comparisons_by_node[nodes1[i]] += 1
-        num_comparisons_by_node[nodes2[i]] += 1
+    for i1 in range(len(nodes1)):
+        num_comparisons_by_node[nodes1[i1]] += 1
+        num_comparisons_by_node[nodes2[i1]] += 1
     candidate_comparisons = []
-    for i in range(len(ranked_nodes) - 1):
-        node1 = ranked_nodes[i]
-        node2 = ranked_nodes[i + 1]
-        comparison_has_been_made = False
-        for a in range(len(nodes1)):
-            if nodes1[a] == node1 and nodes2[a] == node2:
-                comparison_has_been_made = True
-                break
-            if nodes1[a] == node2 and nodes2[a] == node1:
-                comparison_has_been_made = True
-                break
-        if not comparison_has_been_made:
-            candidate_comparisons.append((node1, node2))
+    for i1 in range(len(ranked_nodes)):
+        node1 = ranked_nodes[i1]
+        for i2 in range(i1 + 1, len(ranked_nodes)):
+            if i2 - i1 > 2:
+                continue
+            node2 = ranked_nodes[i2]
+            comparison_has_been_made = False
+            for a in range(len(nodes1)):
+                if nodes1[a] == node1 and nodes2[a] == node2:
+                    comparison_has_been_made = True
+                    break
+                if nodes1[a] == node2 and nodes2[a] == node1:
+                    comparison_has_been_made = True
+                    break
+            if not comparison_has_been_made:
+                candidate_comparisons.append((node1, node2))
     if len(candidate_comparisons) == 0:
         return None
     least_num_comparisons = None
