@@ -73,15 +73,20 @@ def process_dandiset(*, dandiset_id: str, version: str, review_model: str):
             break
         print(f"Next pair to compare: {next_pair}")
         subdir1, subdir2 = next_pair
+        # check to see if we already have this in the results
+        for i1, i2, selection in comparison_results:
+            if (i1 == subdir1 and i2 == subdir2) or (i1 == subdir2 and i2 == subdir1):
+                raise RuntimeError(f"Comparison already exists for {subdir1} and {subdir2}")
         comparison_fname = f'{review_folder}/{subdir1}/comparisons/{subdir2}/comparison.json'
+        if os.path.exists(comparison_fname):
+            raise RuntimeError(f"Comparison file {comparison_fname} already exists")
+        cmd = f'./scripts/comparison.py --dandiset_id {dandiset_id} --version {version} --model {review_model} --subfolder1_name {subdir1} --subfolder2_name {subdir2}'
+        print(f"Running command: {cmd}")
+        result = os.system(cmd)
+        if result != 0:
+            raise RuntimeError(f"Failed to run command: {cmd}")
         if not os.path.exists(comparison_fname):
-            cmd = f'./scripts/comparison.py --dandiset_id {dandiset_id} --version {version} --model {review_model} --subfolder1_name {subdir1} --subfolder2_name {subdir2}'
-            print(f"Running command: {cmd}")
-            result = os.system(cmd)
-            if result != 0:
-                raise RuntimeError(f"Failed to run command: {cmd}")
-            if not os.path.exists(comparison_fname):
-                raise RuntimeError(f"Comparison file {comparison_fname} does not exist even after running the command")
+            raise RuntimeError(f"Comparison file {comparison_fname} does not exist even after running the command")
         with open(comparison_fname, 'r') as f:
             comparison = json.load(f)
             selection = comparison['selection']
