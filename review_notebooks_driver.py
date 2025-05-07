@@ -4,7 +4,7 @@ from typing import List, Tuple
 import os
 import json
 from pathlib import Path
-from scripts.helpers.bt_rank import rank_notebooks, suggest_next_comparison
+from scripts.helpers.rank_notebooks import rank_notebooks, suggest_next_comparison
 
 this_dir = Path(__file__).parent
 
@@ -63,7 +63,7 @@ def process_dandiset(*, dandiset_id: str, version: str, review_model: str):
 
     # do 3 more comparisons (how do we know when to stop?)
     for aa in range(3):
-        next_pair, p_delta = suggest_next_comparison(
+        next_pair = suggest_next_comparison(
             nodes1=[i[0] for i in comparison_results],
             nodes2=[i[1] for i in comparison_results],
             selections=[i[2] for i in comparison_results],
@@ -72,10 +72,7 @@ def process_dandiset(*, dandiset_id: str, version: str, review_model: str):
         if next_pair is None:
             print("No more pairs to compare")
             break
-        if p_delta > 0.2:
-            print(f"p_delta {p_delta} is high enough, stopping")
-            break
-        print(f"Next pair to compare: {next_pair} (p_delta {p_delta})")
+        print(f"Next pair to compare: {next_pair}")
         subdir1, subdir2 = next_pair
         comparison_fname = f'{review_folder}/{subdir1}/comparisons/{subdir2}/comparison.json'
         if not os.path.exists(comparison_fname):
