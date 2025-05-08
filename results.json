@@ -1687,6 +1687,33 @@
     },
     {
       "type": "notebook",
+      "url": "https://github.com/dandi-ai-notebooks/000690/blob/main/v4/0.250326.0015/deepseek-chat-v3-0324-prompt-f-1/000690.ipynb",
+      "dandiset_id": "000690",
+      "version": "0.250326.0015",
+      "model": "deepseek/deepseek-chat-v3-0324",
+      "prompt": "prompt-f-1",
+      "subfolder": "deepseek-chat-v3-0324-prompt-f-1",
+      "metadata": {
+        "dandiset_id": "000690",
+        "version": "0.250326.0015",
+        "model": "deepseek/deepseek-chat-v3-0324",
+        "prompt": "prompt-f-1.txt",
+        "total_prompt_tokens": 139726,
+        "total_completion_tokens": 3721,
+        "total_vision_prompt_tokens": 153,
+        "total_vision_completion_tokens": 121,
+        "elapsed_time_seconds": 326.5773272514343,
+        "timestamp": "2025-05-07 18:19:18",
+        "system_info": {
+          "platform": "Linux-5.10.236-227.928.amzn2.x86_64-x86_64-with-glibc2.39",
+          "hostname": "jupyter-magland",
+          "processor": "x86_64",
+          "python_version": "3.11.10"
+        }
+      }
+    },
+    {
+      "type": "notebook",
       "url": "https://github.com/dandi-ai-notebooks/000690/blob/main/v4/0.250326.0015/gemini-2.0-flash-001-prompt-e-1/000690.ipynb",
       "dandiset_id": "000690",
       "version": "0.250326.0015",
@@ -1731,6 +1758,47 @@
         "total_vision_completion_tokens": 97,
         "elapsed_time_seconds": 289.0740637779236,
         "timestamp": "2025-05-07 12:20:34",
+        "system_info": {
+          "platform": "Linux-5.10.236-227.928.amzn2.x86_64-x86_64-with-glibc2.39",
+          "hostname": "jupyter-magland",
+          "processor": "x86_64",
+          "python_version": "3.11.10"
+        }
+      }
+    },
+    {
+      "type": "human_veto",
+      "dandiset_id": "000690",
+      "version": "0.250326.0015",
+      "model": "anthropic/claude-3.7-sonnet",
+      "prompt": "prompt-f-1",
+      "subfolder": "claude-3.7-sonnet-prompt-f-1",
+      "records": [
+        {
+          "user": "magland",
+          "reason": "The figure \"Correlation Between Running Speed and Neural Activity\" reports a very high correlation for Unit 9 with a p-value of 0.000. However, it is evident that this is due to a single outlier point.\nAlso, the \"Neural Response to SAC_Wd15_Vel2_Bndry1\" figure doesn't look right.\n"
+        }
+      ]
+    },
+    {
+      "type": "notebook",
+      "url": "https://github.com/dandi-ai-notebooks/000690/blob/main/v4/0.250326.0015/claude-3.7-sonnet-prompt-f-1/000690.ipynb",
+      "dandiset_id": "000690",
+      "version": "0.250326.0015",
+      "model": "anthropic/claude-3.7-sonnet",
+      "prompt": "prompt-f-1",
+      "subfolder": "claude-3.7-sonnet-prompt-f-1",
+      "metadata": {
+        "dandiset_id": "000690",
+        "version": "0.250326.0015",
+        "model": "anthropic/claude-3.7-sonnet",
+        "prompt": "prompt-f-1.txt",
+        "total_prompt_tokens": 2678922,
+        "total_completion_tokens": 21295,
+        "total_vision_prompt_tokens": 9292,
+        "total_vision_completion_tokens": 1056,
+        "elapsed_time_seconds": 899.4145958423615,
+        "timestamp": "2025-05-07 17:49:20",
         "system_info": {
           "platform": "Linux-5.10.236-227.928.amzn2.x86_64-x86_64-with-glibc2.39",
           "hostname": "jupyter-magland",
@@ -1785,6 +1853,33 @@
         "total_vision_completion_tokens": 0,
         "elapsed_time_seconds": 283.6395616531372,
         "timestamp": "2025-05-07 13:14:44",
+        "system_info": {
+          "platform": "Linux-5.10.236-227.928.amzn2.x86_64-x86_64-with-glibc2.39",
+          "hostname": "jupyter-magland",
+          "processor": "x86_64",
+          "python_version": "3.11.10"
+        }
+      }
+    },
+    {
+      "type": "notebook",
+      "url": "https://github.com/dandi-ai-notebooks/000690/blob/main/v4/0.250326.0015/claude-3.7-sonnet-prompt-e-1/000690.ipynb",
+      "dandiset_id": "000690",
+      "version": "0.250326.0015",
+      "model": "anthropic/claude-3.7-sonnet",
+      "prompt": "prompt-e-1",
+      "subfolder": "claude-3.7-sonnet-prompt-e-1",
+      "metadata": {
+        "dandiset_id": "000690",
+        "version": "0.250326.0015",
+        "model": "anthropic/claude-3.7-sonnet",
+        "prompt": "prompt-e-1.txt",
+        "total_prompt_tokens": 656374,
+        "total_completion_tokens": 16011,
+        "total_vision_prompt_tokens": 0,
+        "total_vision_completion_tokens": 0,
+        "elapsed_time_seconds": 706.1167986392975,
+        "timestamp": "2025-05-07 17:34:20",
         "system_info": {
           "platform": "Linux-5.10.236-227.928.amzn2.x86_64-x86_64-with-glibc2.39",
           "hostname": "jupyter-magland",

@@ -35,6 +35,20 @@ def process_comparison_test(file_path: str, rel_path: str) -> Dict:
         "selection": data.get("selection")
     }
 
+def process_human_veto(file_path: str, dandiset_id: str, version: str, subfolder: str, config: Dict) -> Dict:
+    """Extract human veto records from yaml file"""
+    with open(file_path, 'r') as f:
+        data = yaml.safe_load(f)
+    return {
+        "type": "human_veto",
+        "dandiset_id": dandiset_id,
+        "version": version,
+        "model": config["model"],
+        "prompt": config["prompt"],
+        "subfolder": subfolder,
+        "records": data
+    }
+
 def process_rankings(file_path: str, rel_path: str) -> Dict:
     """Extract rankings from rankings.json file"""
     with open(file_path, 'r') as f:
@@ -100,6 +114,19 @@ def main():
                     continue
                 with open(metadata_fname, 'r') as f:
                     metadata = json.load(f)
+
+                # Check for human veto file
+                human_veto_fname = subfolder / "human_veto.yaml"
+                if human_veto_fname.exists():
+                    result = process_human_veto(
+                        str(human_veto_fname),
+                        dandiset_id,
+                        version,
+                        subfolder.name,
+                        config
+                    )
+                    results.append(result)
+
                 results.append({
                     "type": "notebook",
                     "url": f"https://github.com/dandi-ai-notebooks/{dandiset_id}/blob/main/v4/{version}/{subfolder.name}/{dandiset_id}.ipynb",
@@ -120,6 +147,7 @@ def main():
     print(f"Total passing qualification tests: {len([r for r in results if r['type'] == 'qualification_test' and r['passing']])}")
     print(f"Total comparison tests: {len([r for r in results if r['type'] == 'comparison'])}")
     print(f"Total rankings: {len([r for r in results if r['type'] == 'rankings'])}")
+    print(f"Total human veto records: {len([r for r in results if r['type'] == 'human_veto'])}")
 
     print(f"Writing results to results.json...")
     with open('results.json', 'w') as f:
