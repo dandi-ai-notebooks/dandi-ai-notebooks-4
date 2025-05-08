@@ -692,24 +692,34 @@
       "version": "0.250326.0015",
       "notebooks": [
         {
-          "subfolder": "gemini-2.5-pro-preview-03-25-prompt-g-1",
-          "wins": 2,
-          "losses": 0
+          "subfolder": "claude-3.7-sonnet-prompt-f-1",
+          "wins": 5,
+          "losses": 1
         },
         {
-          "subfolder": "gemini-2.5-pro-preview-03-25-prompt-e-1",
+          "subfolder": "claude-3.7-sonnet-prompt-e-1",
+          "wins": 4,
+          "losses": 1
+        },
+        {
+          "subfolder": "gemini-2.5-pro-preview-03-25-prompt-g-1",
           "wins": 3,
           "losses": 1
         },
         {
+          "subfolder": "gemini-2.5-pro-preview-03-25-prompt-e-1",
+          "wins": 3,
+          "losses": 3
+        },
+        {
           "subfolder": "o4-mini-high-prompt-g-1",
           "wins": 2,
-          "losses": 2
+          "losses": 4
         },
         {
           "subfolder": "o4-mini-high-prompt-f-1",
           "wins": 2,
-          "losses": 2
+          "losses": 3
         },
         {
           "subfolder": "gemini-2.0-flash-001-prompt-f-1",
@@ -719,7 +729,7 @@
         {
           "subfolder": "gemini-2.0-flash-001-prompt-e-1",
           "wins": 0,
-          "losses": 2
+          "losses": 4
         }
       ]
     },
@@ -825,6 +835,15 @@
       "dandiset_id": "000690",
       "version": "0.250326.0015",
       "subfolder1": "gemini-2.5-pro-preview-03-25-prompt-g-1",
+      "subfolder2": "claude-3.7-sonnet-prompt-f-1",
+      "selection": 1
+    },
+    {
+      "type": "comparison",
+      "model": "claude-3.7-sonnet",
+      "dandiset_id": "000690",
+      "version": "0.250326.0015",
+      "subfolder1": "gemini-2.5-pro-preview-03-25-prompt-g-1",
       "subfolder2": "o4-mini-high-prompt-e-1",
       "selection": 1
     },
@@ -836,6 +855,15 @@
       "subfolder1": "gemini-2.5-pro-preview-03-25-prompt-g-1",
       "subfolder2": "o4-mini-high-prompt-g-1",
       "selection": 1
+    },
+    {
+      "type": "comparison",
+      "model": "claude-3.7-sonnet",
+      "dandiset_id": "000690",
+      "version": "0.250326.0015",
+      "subfolder1": "gemini-2.5-pro-preview-03-25-prompt-g-1",
+      "subfolder2": "claude-3.7-sonnet-prompt-e-1",
+      "selection": 2
     },
     {
       "type": "comparison",
@@ -899,6 +927,24 @@
       "selection": 2
     },
     {
+      "type": "comparison",
+      "model": "claude-3.7-sonnet",
+      "dandiset_id": "000690",
+      "version": "0.250326.0015",
+      "subfolder1": "gemini-2.0-flash-001-prompt-e-1",
+      "subfolder2": "claude-3.7-sonnet-prompt-f-1",
+      "selection": 2
+    },
+    {
+      "type": "comparison",
+      "model": "claude-3.7-sonnet",
+      "dandiset_id": "000690",
+      "version": "0.250326.0015",
+      "subfolder1": "gemini-2.0-flash-001-prompt-e-1",
+      "subfolder2": "claude-3.7-sonnet-prompt-e-1",
+      "selection": 2
+    },
+    {
       "type": "qualification_test",
       "model": "claude-3.7-sonnet",
       "dandiset_id": "000690",
@@ -923,6 +969,32 @@
       "subfolder1": "gemini-2.0-flash-001-prompt-f-1",
       "subfolder2": "gemini-2.5-pro-preview-03-25-prompt-e-1",
       "selection": 2
+    },
+    {
+      "type": "qualification_test",
+      "model": "claude-3.7-sonnet",
+      "dandiset_id": "000690",
+      "version": "0.250326.0015",
+      "subfolder": "claude-3.7-sonnet-prompt-f-1",
+      "passing": true
+    },
+    {
+      "type": "comparison",
+      "model": "claude-3.7-sonnet",
+      "dandiset_id": "000690",
+      "version": "0.250326.0015",
+      "subfolder1": "claude-3.7-sonnet-prompt-f-1",
+      "subfolder2": "o4-mini-high-prompt-f-1",
+      "selection": 1
+    },
+    {
+      "type": "comparison",
+      "model": "claude-3.7-sonnet",
+      "dandiset_id": "000690",
+      "version": "0.250326.0015",
+      "subfolder1": "claude-3.7-sonnet-prompt-f-1",
+      "subfolder2": "gemini-2.5-pro-preview-03-25-prompt-e-1",
+      "selection": 1
     },
     {
       "type": "qualification_test",
@@ -1009,7 +1081,42 @@
       "dandiset_id": "000690",
       "version": "0.250326.0015",
       "subfolder1": "o4-mini-high-prompt-g-1",
+      "subfolder2": "claude-3.7-sonnet-prompt-f-1",
+      "selection": 2
+    },
+    {
+      "type": "comparison",
+      "model": "claude-3.7-sonnet",
+      "dandiset_id": "000690",
+      "version": "0.250326.0015",
+      "subfolder1": "o4-mini-high-prompt-g-1",
       "subfolder2": "gemini-2.0-flash-001-prompt-g-1",
+      "selection": 1
+    },
+    {
+      "type": "qualification_test",
+      "model": "claude-3.7-sonnet",
+      "dandiset_id": "000690",
+      "version": "0.250326.0015",
+      "subfolder": "claude-3.7-sonnet-prompt-e-1",
+      "passing": true
+    },
+    {
+      "type": "comparison",
+      "model": "claude-3.7-sonnet",
+      "dandiset_id": "000690",
+      "version": "0.250326.0015",
+      "subfolder1": "claude-3.7-sonnet-prompt-e-1",
+      "subfolder2": "claude-3.7-sonnet-prompt-f-1",
+      "selection": 2
+    },
+    {
+      "type": "comparison",
+      "model": "claude-3.7-sonnet",
+      "dandiset_id": "000690",
+      "version": "0.250326.0015",
+      "subfolder1": "claude-3.7-sonnet-prompt-e-1",
+      "subfolder2": "o4-mini-high-prompt-g-1",
       "selection": 1
     },
     {
@@ -1064,6 +1171,15 @@
       "subfolder1": "gemini-2.5-pro-preview-03-25-prompt-e-1",
       "subfolder2": "o4-mini-high-prompt-g-1",
       "selection": 1
+    },
+    {
+      "type": "comparison",
+      "model": "claude-3.7-sonnet",
+      "dandiset_id": "000690",
+      "version": "0.250326.0015",
+      "subfolder1": "gemini-2.5-pro-preview-03-25-prompt-e-1",
+      "subfolder2": "claude-3.7-sonnet-prompt-e-1",
+      "selection": 2
     },
     {
       "type": "qualification_test",
