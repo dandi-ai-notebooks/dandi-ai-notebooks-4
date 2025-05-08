@@ -14,10 +14,11 @@ import {
   InputLabel,
   TableSortLabel,
   Typography,
-  Link
+  Link,
+  Tooltip
 } from '@mui/material';
 
-type SortKey = keyof Metadata | 'est_cost' | 'qual' | 'rank';
+type SortKey = keyof Metadata | 'est_cost' | 'qual' | 'rank' | 'vetoes';
 
 type SortConfig = {
   key: SortKey;
@@ -31,9 +32,10 @@ interface Props {
   qualResults: Map<string, boolean>;
   rankResults: Map<string, number>;
   modelForReviews: string;
+  vetoResults: Map<string, {user: string, reason: string}[]>;
 }
 
-export default function NotebooksTable({ notebooks, qualResults, rankResults, modelForReviews }: Props) {
+export default function NotebooksTable({ notebooks, qualResults, rankResults, modelForReviews, vetoResults }: Props) {
   const [selectedDandiset, setSelectedDandiset] = useState<string>('');
   const [sortConfig, setSortConfig] = useState<SortConfig>({
     key: 'timestamp' as SortKey,
@@ -53,6 +55,41 @@ export default function NotebooksTable({ notebooks, qualResults, rankResults, mo
   const getPromptUrl = (prompt: string) => {
     return `https://github.com/dandi-ai-notebooks/dandi-ai-notebooks-4/blob/main/scripts/templates/generate_notebook/${prompt}.txt`;
   };
+
+  const bestNonVetoedNotebooks = useMemo(() => {
+    const bestByDandiset = new Map<string, string>(); // dandiset_id -> notebook key
+
+    // Group notebooks by dandiset
+    const byDandiset = new Map<string, NotebookRecord[]>();
+    notebooks.forEach(notebook => {
+      const current = byDandiset.get(notebook.dandiset_id) || [];
+      current.push(notebook);
+      byDandiset.set(notebook.dandiset_id, current);
+    });
+
+    // Find best non-vetoed notebook for each dandiset
+    byDandiset.forEach((dandisetNotebooks, dandisetId) => {
+      let bestRank = Number.MAX_SAFE_INTEGER;
+      let bestKey = '';
+
+      dandisetNotebooks.forEach(notebook => {
+        const key = `${notebook.dandiset_id}/${notebook.version}/${notebook.subfolder}`;
+        const rank = rankResults.get(key) ?? Number.MAX_SAFE_INTEGER;
+        const isVetoed = vetoResults.has(key);
+
+        if (!isVetoed && rank < bestRank) {
+          bestRank = rank;
+          bestKey = key;
+        }
+      });
+
+      if (bestKey) {
+        bestByDandiset.set(dandisetId, bestKey);
+      }
+    });
+
+    return bestByDandiset;
+  }, [notebooks, rankResults, vetoResults]);
 
   const filteredAndSortedNotebooks = useMemo(() => {
     const filtered = selectedDandiset
@@ -75,6 +112,14 @@ export default function NotebooksTable({ notebooks, qualResults, rankResults, mo
         return sortConfig.direction === 'asc'
           ? aRank - bRank
           : bRank - aRank;
+      }
+
+      if (sortConfig.key === 'vetoes') {
+        const aVetoes = vetoResults.get(`${a.dandiset_id}/${a.version}/${a.subfolder}`)?.length ?? 0;
+        const bVetoes = vetoResults.get(`${b.dandiset_id}/${b.version}/${b.subfolder}`)?.length ?? 0;
+        return sortConfig.direction === 'asc'
+          ? aVetoes - bVetoes
+          : bVetoes - aVetoes;
       }
 
       let aValue: string | number = 0;
@@ -104,7 +149,7 @@ export default function NotebooksTable({ notebooks, qualResults, rankResults, mo
 
       return 0;
     });
-  }, [notebooks, sortConfig, selectedDandiset, qualResults, rankResults]);
+  }, [notebooks, sortConfig, selectedDandiset, qualResults, rankResults, vetoResults]);
 
   return (
     <div>
@@ -207,16 +252,26 @@ export default function NotebooksTable({ notebooks, qualResults, rankResults, mo
                   Rank
                 </TableSortLabel>
               </TableCell>
+              <TableCell>
+                <TableSortLabel
+                  active={sortConfig.key === 'vetoes'}
+                  direction={sortConfig.key === 'vetoes' ? sortConfig.direction : 'asc'}
+                  onClick={() => handleSort('vetoes')}
+                >
+                  Human Veto
+                </TableSortLabel>
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {filteredAndSortedNotebooks.map((notebook, index) => {
               // const critiqueUrls = getCritiqueUrls(notebook);
-              const isRankOne = rankResults.get(`${notebook.dandiset_id}/${notebook.version}/${notebook.subfolder}`) === 1;
+              const notebookKey = `${notebook.dandiset_id}/${notebook.version}/${notebook.subfolder}`;
+              const isBestNonVetoed = bestNonVetoedNotebooks.get(notebook.dandiset_id) === notebookKey;
               return (
                 <TableRow
                   key={index}
-                  sx={isRankOne ? { backgroundColor: 'rgba(76, 175, 80, 0.1)' } : undefined}
+                  sx={isBestNonVetoed ? { backgroundColor: 'rgba(76, 175, 80, 0.1)' } : undefined}
                 >
                   <TableCell>
                     <Link
@@ -303,6 +358,30 @@ export default function NotebooksTable({ notebooks, qualResults, rankResults, mo
                     >
                       {rankResults.get(`${notebook.dandiset_id}/${notebook.version}/${notebook.subfolder}`)}
                     </Link>
+                  </TableCell>
+                  <TableCell>
+                    {(() => {
+                      const vetoes = vetoResults.get(`${notebook.dandiset_id}/${notebook.version}/${notebook.subfolder}`);
+                      if (!vetoes?.length) return null;
+                      return (
+                        <Tooltip
+                          title={
+                            <div>
+                              {vetoes.map((veto, i) => (
+                                <div key={i}>
+                                  <strong>{veto.user}:</strong>
+                                  <br />
+                                  {veto.reason}
+                                  {i < vetoes.length - 1 && <hr />}
+                                </div>
+                              ))}
+                            </div>
+                          }
+                        >
+                          <Typography sx={{ color: 'error.main' }}>✗</Typography>
+                        </Tooltip>
+                      );
+                    })()}
                   </TableCell>
                 </TableRow>
               );

@@ -88,7 +88,18 @@ export type ReviewResultType = {
     wins: number;
     losses: number;
   }[];
-} | NotebookRecord
+} | NotebookRecord | {
+  type: "human_veto";
+  dandiset_id: string;
+  version: string;
+  model: string;
+  prompt: string;
+  subfolder: string;
+  vetoes: {
+    user: string;
+    reason: string;
+  }[];
+}
 
 export interface ReviewResults {
   results: ReviewResultType[];

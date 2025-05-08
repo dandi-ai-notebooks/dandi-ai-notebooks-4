@@ -1978,6 +1978,20 @@
       }
     },
     {
+      "type": "human_veto",
+      "dandiset_id": "000690",
+      "version": "0.250326.0015",
+      "model": "anthropic/claude-3.7-sonnet",
+      "prompt": "prompt-e-1",
+      "subfolder": "claude-3.7-sonnet-prompt-e-1",
+      "vetoes": [
+        {
+          "user": "magland",
+          "reason": "The distribution of presentation durations figure has only one bar.\n"
+        }
+      ]
+    },
+    {
       "type": "notebook",
       "url": "https://github.com/dandi-ai-notebooks/000690/blob/main/v4/0.250326.0015/claude-3.7-sonnet-prompt-e-1/000690.ipynb",
       "dandiset_id": "000690",
