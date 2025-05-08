@@ -46,7 +46,7 @@ def process_human_veto(file_path: str, dandiset_id: str, version: str, subfolder
         "model": config["model"],
         "prompt": config["prompt"],
         "subfolder": subfolder,
-        "records": data
+        "vetoes": data
     }
 
 def process_rankings(file_path: str, rel_path: str) -> Dict:
