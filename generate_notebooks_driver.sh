@@ -18,7 +18,8 @@ DANDISET_IDS_AND_VERSIONS=(
 for entry in "${DANDISET_IDS_AND_VERSIONS[@]}"; do
     IFS=' ' read -r DANDISET_ID VERSION <<< "$entry"
 
-    MODEL=google/gemini-2.5-flash-preview
+    # MODEL=google/gemini-2.5-flash-preview
+    MODEL=google/gemini-2.5-pro-preview
 
     # non-agentic
     PROMPT=prompt-non-2
