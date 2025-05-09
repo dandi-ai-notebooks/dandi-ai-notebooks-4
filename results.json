@@ -5259,6 +5259,20 @@
       }
     },
     {
+      "type": "human_veto",
+      "dandiset_id": "001333",
+      "version": "0.250327.2220",
+      "model": "openai/gpt-4.1",
+      "prompt": "prompt-g-2",
+      "subfolder": "gpt-4.1-prompt-g-2",
+      "vetoes": [
+        {
+          "user": "magland",
+          "reason": "Accessing Beta ARV data failed."
+        }
+      ]
+    },
+    {
       "type": "notebook",
       "url": "https://github.com/dandi-ai-notebooks/001333/blob/main/v4/0.250327.2220/gpt-4.1-prompt-g-2/001333.ipynb",
       "dandiset_id": "001333",
