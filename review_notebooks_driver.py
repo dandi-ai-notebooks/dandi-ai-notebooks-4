@@ -75,6 +75,9 @@ def process_dandiset(*, dandiset_id: str, version: str, review_model: str):
             break
         print(f"Next pair to compare: {next_pair}")
         subdir1, subdir2 = next_pair
+        # randomly swap the two to avoid systematic bias
+        if os.urandom(1)[0] % 2 == 0:
+            subdir1, subdir2 = subdir2, subdir1
         # check to see if we already have this in the results
         for i1, i2, selection in comparison_results:
             if (i1 == subdir1 and i2 == subdir2) or (i1 == subdir2 and i2 == subdir1):
