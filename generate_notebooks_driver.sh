@@ -20,12 +20,19 @@ for entry in "${DANDISET_IDS_AND_VERSIONS[@]}"; do
 
     MODEL=google/gemini-2.5-flash-preview
 
+    # non-agentic
+    PROMPT=prompt-non-2
+    ./scripts/generate_notebook.py --dandiset_id $DANDISET_ID --version $VERSION --model $MODEL --prompt $PROMPT
+
+    # no exploration
     PROMPT=prompt-e-2
     ./scripts/generate_notebook.py --dandiset_id $DANDISET_ID --version $VERSION --model $MODEL --prompt $PROMPT
 
+    # exploration
     PROMPT=prompt-f-2
     ./scripts/generate_notebook.py --dandiset_id $DANDISET_ID --version $VERSION --model $MODEL --prompt $PROMPT
 
+    # exploration + critique
     PROMPT=prompt-g-2
     ./scripts/generate_notebook.py --dandiset_id $DANDISET_ID --version $VERSION --model $MODEL --prompt $PROMPT
 done
