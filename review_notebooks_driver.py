@@ -31,6 +31,7 @@ def process_dandiset(*, dandiset_id: str, version: str, review_model: str):
             print(f"Running command: {cmd}")
             result = os.system(cmd)
             if result != 0:
+                print(f'Failed to run qualification test for {dandiset_id} {version} {subdir}')
                 raise RuntimeError(f"Failed to run command: {cmd}")
         if not os.path.exists(qualification_test_fname):
             raise RuntimeError(f"Qualification test file {qualification_test_fname} does not exist even after running the command")

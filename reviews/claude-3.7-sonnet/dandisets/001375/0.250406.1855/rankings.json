@@ -1,0 +1,19 @@
+{
+    "ranked_notebooks": [
+        {
+            "subfolder": "gemini-2.5-flash-preview-prompt-g-2",
+            "wins": 2,
+            "losses": 0
+        },
+        {
+            "subfolder": "gemini-2.5-flash-preview-prompt-e-2",
+            "wins": 1,
+            "losses": 1
+        },
+        {
+            "subfolder": "gemini-2.5-flash-preview-prompt-f-2",
+            "wins": 0,
+            "losses": 2
+        }
+    ]
+}

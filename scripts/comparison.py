@@ -30,8 +30,11 @@ def create_message_content_for_cell(cell: Dict[str, Any]) -> List[Dict[str, Any]
         for x in cell["outputs"]:
             output_type = x["output_type"]
             if output_type == "stream":
+                text = "OUTPUT-TEXT: " + "\n".join(x["text"])
+                if len(text) > 20_000:
+                    text = text[:20_000] + " [OUTPUT-TRUNCATED]"
                 content.append(
-                    {"type": "text", "text": "OUTPUT-TEXT: " + "\n".join(x["text"])}
+                    {"type": "text", "text": text}
                 )
             elif output_type == "display_data" or output_type == "execute_result":
                 if "image/png" in x["data"]:
@@ -142,9 +145,23 @@ def run_comparison_test_for_notebooks(*, notebook1_path: str, notebook2_path: st
         }
     )
 
-    comparison_response, new_messages, prompt_tokens, completion_tokens = (
-        run_completion(messages=messages, model=model)
-    )
+    # do three retries in case there's an openrouter error
+    prompt_tokens = 0
+    completion_tokens = 0
+    comparison_response = ""
+    new_messages = []
+    for i in range(3):
+        try:
+            comparison_response, new_messages, prompt_tokens, completion_tokens = (
+                run_completion(messages=messages, model=model)
+            )
+            break
+        except Exception as e:
+            print(f"Error in run_completion: {e}")
+            if i == 2:
+                raise e
+            print("Retrying in 5 seconds...")
+            time.sleep(5)
     total_prompt_tokens += prompt_tokens
     total_completion_tokens += completion_tokens
     messages = new_messages # very important to update messages with the new messages from the model

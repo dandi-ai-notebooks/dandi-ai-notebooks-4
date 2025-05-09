@@ -25,8 +25,11 @@ def create_message_content_for_cell(cell: Dict[str, Any]) -> List[Dict[str, Any]
         for x in cell["outputs"]:
             output_type = x["output_type"]
             if output_type == "stream":
+                text = "OUTPUT-TEXT: " + "\n".join(x["text"])
+                if len(text) > 20_000:
+                    text = text[:20_000] + " [OUTPUT-TRUNCATED]"
                 content.append(
-                    {"type": "text", "text": "OUTPUT-TEXT: " + "\n".join(x["text"])}
+                    {"type": "text", "text": text}
                 )
             elif output_type == "display_data" or output_type == "execute_result":
                 if "image/png" in x["data"]:
