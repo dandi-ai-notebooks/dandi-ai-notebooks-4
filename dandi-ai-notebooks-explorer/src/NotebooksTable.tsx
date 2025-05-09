@@ -396,6 +396,7 @@ export default function NotebooksTable({ notebooks, qualResults, rankResults, mo
 const calculateEstimatedCost = (metadata: Metadata) => {
   const getModelCost = (model: string): [number | undefined, number | undefined] => {
     if (model === 'google/gemini-2.0-flash-001') return [0.1, 0.4];
+    else if (model === 'google/gemini-2.5-flash-preview') return [0.15, 0.6];
     else if (model === 'google/gemini-2.5-pro-preview-03-25') return [1.25, 10];
     else if (model === 'google/gemini-2.5-pro-preview') return [1.25, 10];
     else if (model === 'openai/gpt-4o') return [2.5, 10];
