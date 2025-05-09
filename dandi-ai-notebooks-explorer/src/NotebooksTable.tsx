@@ -407,6 +407,7 @@ const calculateEstimatedCost = (metadata: Metadata) => {
     else if (model === 'deepseek/deepseek-chat-v3-0324') return [0.27, 1.1];
     else if (model === 'openai/o4-mini') return [1.1, 4.4];
     else if (model === 'openai/o4-mini-high') return [1.1, 4.4];
+    else if (model === 'openai/gpt-4.1') return [2, 8];
     else if (model === 'openai/o3') return [10, 40];
     return [undefined, undefined];
   };
