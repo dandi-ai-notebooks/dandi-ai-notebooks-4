@@ -104,6 +104,8 @@ def main():
             for subfolder in version_dir.iterdir():
                 if not subfolder.is_dir():
                     continue
+                if not str(subfolder).endswith("-2"):
+                    continue
                 config_fname = subfolder / "config.yaml"
                 if not config_fname.exists():
                     continue
