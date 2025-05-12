@@ -1,9 +1,4 @@
 Things to add for the next prompts
 
-Do not worry about closing the nwb files.
-See the last cell of https://github.com/dandi-ai-notebooks/000690/blob/main/v4/0.250326.0015/gemini-2.5-pro-preview-03-25-prompt-g-1/000690.ipynb
-
-Do not use try/catch blocks in notebook cells. It makes things overly complicated and difficult to read.
-
-Keep Python code in the cells simple where possible so that it is easy to read and understand.
-
+Something to the effect of:
+If you're struggling and getting nowhere with the process, end early and do not create a notebook.

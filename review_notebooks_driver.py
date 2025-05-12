@@ -17,6 +17,7 @@ def process_dandiset(*, dandiset_id: str, version: str, review_model: str):
     subdirs = [f for f in os.listdir(dandiset_folder) if os.path.isdir(os.path.join(dandiset_folder, f))]
     # exclude those that contain "-non-". Those are the non-agentic notebooks
     subdirs = [f for f in subdirs if '-non-' not in f]
+    subdirs = [f for f in subdirs if f.endswith('-2')]
     passing_subdirs = []
     for subdir in subdirs:
         notebook_fname = f'{dandiset_folder}/{subdir}/{dandiset_id}.ipynb'
