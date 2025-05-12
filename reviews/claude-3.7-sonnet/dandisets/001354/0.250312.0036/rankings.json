@@ -1,19 +1,24 @@
 {
     "ranked_notebooks": [
         {
-            "subfolder": "gpt-4.1-prompt-f-2",
+            "subfolder": "claude-3.7-sonnet-prompt-f-2",
             "wins": 4,
             "losses": 0
         },
         {
+            "subfolder": "gpt-4.1-prompt-f-2",
+            "wins": 4,
+            "losses": 1
+        },
+        {
             "subfolder": "gemini-2.5-pro-preview-prompt-f-2",
             "wins": 2,
-            "losses": 2
+            "losses": 3
         },
         {
             "subfolder": "gpt-4.1-prompt-g-2",
             "wins": 2,
-            "losses": 2
+            "losses": 3
         },
         {
             "subfolder": "gemini-2.5-pro-preview-prompt-e-2",
@@ -28,7 +33,7 @@
         {
             "subfolder": "gemini-2.5-pro-preview-prompt-g-2",
             "wins": 0,
-            "losses": 2
+            "losses": 3
         }
     ]
 }
