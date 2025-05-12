@@ -395,19 +395,24 @@
       "version": "0.250312.0036",
       "notebooks": [
         {
-          "subfolder": "gpt-4.1-prompt-f-2",
+          "subfolder": "claude-3.7-sonnet-prompt-f-2",
           "wins": 4,
           "losses": 0
         },
         {
+          "subfolder": "gpt-4.1-prompt-f-2",
+          "wins": 4,
+          "losses": 1
+        },
+        {
           "subfolder": "gemini-2.5-pro-preview-prompt-f-2",
           "wins": 2,
-          "losses": 2
+          "losses": 3
         },
         {
           "subfolder": "gpt-4.1-prompt-g-2",
           "wins": 2,
-          "losses": 2
+          "losses": 3
         },
         {
           "subfolder": "gemini-2.5-pro-preview-prompt-e-2",
@@ -422,7 +427,7 @@
         {
           "subfolder": "gemini-2.5-pro-preview-prompt-g-2",
           "wins": 0,
-          "losses": 2
+          "losses": 3
         }
       ]
     },
@@ -432,6 +437,14 @@
       "dandiset_id": "001354",
       "version": "0.250312.0036",
       "subfolder": "gpt-4.1-prompt-e-2",
+      "passing": false
+    },
+    {
+      "type": "qualification_test",
+      "model": "claude-3.7-sonnet",
+      "dandiset_id": "001354",
+      "version": "0.250312.0036",
+      "subfolder": "claude-3.7-sonnet-prompt-g-2",
       "passing": false
     },
     {
@@ -464,8 +477,52 @@
       "model": "claude-3.7-sonnet",
       "dandiset_id": "001354",
       "version": "0.250312.0036",
+      "subfolder": "claude-3.7-sonnet-prompt-f-2",
+      "passing": true
+    },
+    {
+      "type": "comparison",
+      "model": "claude-3.7-sonnet",
+      "dandiset_id": "001354",
+      "version": "0.250312.0036",
+      "subfolder1": "claude-3.7-sonnet-prompt-f-2",
+      "subfolder2": "gemini-2.5-pro-preview-prompt-f-2",
+      "selection": 1
+    },
+    {
+      "type": "comparison",
+      "model": "claude-3.7-sonnet",
+      "dandiset_id": "001354",
+      "version": "0.250312.0036",
+      "subfolder1": "claude-3.7-sonnet-prompt-f-2",
+      "subfolder2": "gemini-2.5-pro-preview-prompt-g-2",
+      "selection": 1
+    },
+    {
+      "type": "comparison",
+      "model": "claude-3.7-sonnet",
+      "dandiset_id": "001354",
+      "version": "0.250312.0036",
+      "subfolder1": "claude-3.7-sonnet-prompt-f-2",
+      "subfolder2": "gpt-4.1-prompt-g-2",
+      "selection": 1
+    },
+    {
+      "type": "qualification_test",
+      "model": "claude-3.7-sonnet",
+      "dandiset_id": "001354",
+      "version": "0.250312.0036",
       "subfolder": "gpt-4.1-prompt-f-2",
       "passing": true
+    },
+    {
+      "type": "comparison",
+      "model": "claude-3.7-sonnet",
+      "dandiset_id": "001354",
+      "version": "0.250312.0036",
+      "subfolder1": "gpt-4.1-prompt-f-2",
+      "subfolder2": "claude-3.7-sonnet-prompt-f-2",
+      "selection": 2
     },
     {
       "type": "comparison",
@@ -986,9 +1043,24 @@
       "version": "0.250311.2145",
       "notebooks": [
         {
+          "subfolder": "gemini-2.5-pro-preview-prompt-f-2",
+          "wins": 2,
+          "losses": 0
+        },
+        {
+          "subfolder": "gemini-2.5-pro-preview-prompt-e-2",
+          "wins": 2,
+          "losses": 1
+        },
+        {
+          "subfolder": "gemini-2.5-pro-preview-prompt-g-2",
+          "wins": 1,
+          "losses": 2
+        },
+        {
           "subfolder": "gemini-2.5-flash-preview-prompt-f-2",
           "wins": 0,
-          "losses": 0
+          "losses": 2
         }
       ]
     },
@@ -1005,8 +1077,50 @@
       "model": "claude-3.7-sonnet",
       "dandiset_id": "000563",
       "version": "0.250311.2145",
+      "subfolder": "claude-3.7-sonnet-prompt-g-2",
+      "passing": false
+    },
+    {
+      "type": "qualification_test",
+      "model": "claude-3.7-sonnet",
+      "dandiset_id": "000563",
+      "version": "0.250311.2145",
       "subfolder": "gemini-2.5-flash-preview-prompt-f-2",
       "passing": true
+    },
+    {
+      "type": "comparison",
+      "model": "claude-3.7-sonnet",
+      "dandiset_id": "000563",
+      "version": "0.250311.2145",
+      "subfolder1": "gemini-2.5-flash-preview-prompt-f-2",
+      "subfolder2": "gemini-2.5-pro-preview-prompt-e-2",
+      "selection": 2
+    },
+    {
+      "type": "qualification_test",
+      "model": "claude-3.7-sonnet",
+      "dandiset_id": "000563",
+      "version": "0.250311.2145",
+      "subfolder": "gemini-2.5-pro-preview-prompt-f-2",
+      "passing": true
+    },
+    {
+      "type": "comparison",
+      "model": "claude-3.7-sonnet",
+      "dandiset_id": "000563",
+      "version": "0.250311.2145",
+      "subfolder1": "gemini-2.5-pro-preview-prompt-f-2",
+      "subfolder2": "gemini-2.5-pro-preview-prompt-g-2",
+      "selection": 1
+    },
+    {
+      "type": "qualification_test",
+      "model": "claude-3.7-sonnet",
+      "dandiset_id": "000563",
+      "version": "0.250311.2145",
+      "subfolder": "claude-3.7-sonnet-prompt-f-2",
+      "passing": false
     },
     {
       "type": "qualification_test",
@@ -1015,6 +1129,23 @@
       "version": "0.250311.2145",
       "subfolder": "gpt-4.1-prompt-f-2",
       "passing": false
+    },
+    {
+      "type": "qualification_test",
+      "model": "claude-3.7-sonnet",
+      "dandiset_id": "000563",
+      "version": "0.250311.2145",
+      "subfolder": "gemini-2.5-pro-preview-prompt-g-2",
+      "passing": true
+    },
+    {
+      "type": "comparison",
+      "model": "claude-3.7-sonnet",
+      "dandiset_id": "000563",
+      "version": "0.250311.2145",
+      "subfolder1": "gemini-2.5-pro-preview-prompt-g-2",
+      "subfolder2": "gemini-2.5-flash-preview-prompt-f-2",
+      "selection": 1
     },
     {
       "type": "qualification_test",
@@ -1031,6 +1162,40 @@
       "version": "0.250311.2145",
       "subfolder": "gemini-2.5-flash-preview-prompt-e-2",
       "passing": false
+    },
+    {
+      "type": "qualification_test",
+      "model": "claude-3.7-sonnet",
+      "dandiset_id": "000563",
+      "version": "0.250311.2145",
+      "subfolder": "claude-3.7-sonnet-prompt-e-2",
+      "passing": false
+    },
+    {
+      "type": "qualification_test",
+      "model": "claude-3.7-sonnet",
+      "dandiset_id": "000563",
+      "version": "0.250311.2145",
+      "subfolder": "gemini-2.5-pro-preview-prompt-e-2",
+      "passing": true
+    },
+    {
+      "type": "comparison",
+      "model": "claude-3.7-sonnet",
+      "dandiset_id": "000563",
+      "version": "0.250311.2145",
+      "subfolder1": "gemini-2.5-pro-preview-prompt-e-2",
+      "subfolder2": "gemini-2.5-pro-preview-prompt-f-2",
+      "selection": 2
+    },
+    {
+      "type": "comparison",
+      "model": "claude-3.7-sonnet",
+      "dandiset_id": "000563",
+      "version": "0.250311.2145",
+      "subfolder1": "gemini-2.5-pro-preview-prompt-e-2",
+      "subfolder2": "gemini-2.5-pro-preview-prompt-g-2",
+      "selection": 1
     },
     {
       "type": "rankings",
@@ -6425,6 +6590,33 @@
     },
     {
       "type": "notebook",
+      "url": "https://github.com/dandi-ai-notebooks/001354/blob/main/v4/0.250312.0036/claude-3.7-sonnet-prompt-g-2/001354.ipynb",
+      "dandiset_id": "001354",
+      "version": "0.250312.0036",
+      "model": "anthropic/claude-3.7-sonnet",
+      "prompt": "prompt-g-2",
+      "subfolder": "claude-3.7-sonnet-prompt-g-2",
+      "metadata": {
+        "dandiset_id": "001354",
+        "version": "0.250312.0036",
+        "model": "anthropic/claude-3.7-sonnet",
+        "prompt": "prompt-g-2.txt",
+        "total_prompt_tokens": 2628172,
+        "total_completion_tokens": 25394,
+        "total_vision_prompt_tokens": 8817,
+        "total_vision_completion_tokens": 2126,
+        "elapsed_time_seconds": 1225.9377360343933,
+        "timestamp": "2025-05-12 15:35:32",
+        "system_info": {
+          "platform": "Linux-6.8.0-59-generic-x86_64-with-glibc2.35",
+          "hostname": "system76-pc",
+          "processor": "x86_64",
+          "python_version": "3.12.2"
+        }
+      }
+    },
+    {
+      "type": "notebook",
       "url": "https://github.com/dandi-ai-notebooks/001354/blob/main/v4/0.250312.0036/gemini-2.5-flash-preview-prompt-f-2/001354.ipynb",
       "dandiset_id": "001354",
       "version": "0.250312.0036",
@@ -6469,6 +6661,33 @@
         "total_vision_completion_tokens": 7353,
         "elapsed_time_seconds": 1170.6744537353516,
         "timestamp": "2025-05-09 16:01:24",
+        "system_info": {
+          "platform": "Linux-6.8.0-59-generic-x86_64-with-glibc2.35",
+          "hostname": "system76-pc",
+          "processor": "x86_64",
+          "python_version": "3.12.2"
+        }
+      }
+    },
+    {
+      "type": "notebook",
+      "url": "https://github.com/dandi-ai-notebooks/001354/blob/main/v4/0.250312.0036/claude-3.7-sonnet-prompt-f-2/001354.ipynb",
+      "dandiset_id": "001354",
+      "version": "0.250312.0036",
+      "model": "anthropic/claude-3.7-sonnet",
+      "prompt": "prompt-f-2",
+      "subfolder": "claude-3.7-sonnet-prompt-f-2",
+      "metadata": {
+        "dandiset_id": "001354",
+        "version": "0.250312.0036",
+        "model": "anthropic/claude-3.7-sonnet",
+        "prompt": "prompt-f-2.txt",
+        "total_prompt_tokens": 1280877,
+        "total_completion_tokens": 17498,
+        "total_vision_prompt_tokens": 10914,
+        "total_vision_completion_tokens": 1782,
+        "elapsed_time_seconds": 666.8715813159943,
+        "timestamp": "2025-05-12 15:15:06",
         "system_info": {
           "platform": "Linux-6.8.0-59-generic-x86_64-with-glibc2.35",
           "hostname": "system76-pc",
@@ -7262,6 +7481,33 @@
     },
     {
       "type": "notebook",
+      "url": "https://github.com/dandi-ai-notebooks/000563/blob/main/v4/0.250311.2145/claude-3.7-sonnet-prompt-g-2/000563.ipynb",
+      "dandiset_id": "000563",
+      "version": "0.250311.2145",
+      "model": "anthropic/claude-3.7-sonnet",
+      "prompt": "prompt-g-2",
+      "subfolder": "claude-3.7-sonnet-prompt-g-2",
+      "metadata": {
+        "dandiset_id": "000563",
+        "version": "0.250311.2145",
+        "model": "anthropic/claude-3.7-sonnet",
+        "prompt": "prompt-g-2.txt",
+        "total_prompt_tokens": 1305910,
+        "total_completion_tokens": 28574,
+        "total_vision_prompt_tokens": 3853,
+        "total_vision_completion_tokens": 709,
+        "elapsed_time_seconds": 1291.1908266544342,
+        "timestamp": "2025-05-12 16:33:16",
+        "system_info": {
+          "platform": "Linux-6.8.0-59-generic-x86_64-with-glibc2.35",
+          "hostname": "system76-pc",
+          "processor": "x86_64",
+          "python_version": "3.12.2"
+        }
+      }
+    },
+    {
+      "type": "notebook",
       "url": "https://github.com/dandi-ai-notebooks/000563/blob/main/v4/0.250311.2145/gemini-2.5-flash-preview-prompt-f-2/000563.ipynb",
       "dandiset_id": "000563",
       "version": "0.250311.2145",
@@ -7289,6 +7535,60 @@
     },
     {
       "type": "notebook",
+      "url": "https://github.com/dandi-ai-notebooks/000563/blob/main/v4/0.250311.2145/gemini-2.5-pro-preview-prompt-f-2/000563.ipynb",
+      "dandiset_id": "000563",
+      "version": "0.250311.2145",
+      "model": "google/gemini-2.5-pro-preview",
+      "prompt": "prompt-f-2",
+      "subfolder": "gemini-2.5-pro-preview-prompt-f-2",
+      "metadata": {
+        "dandiset_id": "000563",
+        "version": "0.250311.2145",
+        "model": "google/gemini-2.5-pro-preview",
+        "prompt": "prompt-f-2.txt",
+        "total_prompt_tokens": 877139,
+        "total_completion_tokens": 14414,
+        "total_vision_prompt_tokens": 3021,
+        "total_vision_completion_tokens": 4677,
+        "elapsed_time_seconds": 641.0430898666382,
+        "timestamp": "2025-05-12 16:03:18",
+        "system_info": {
+          "platform": "Linux-6.8.0-59-generic-x86_64-with-glibc2.35",
+          "hostname": "system76-pc",
+          "processor": "x86_64",
+          "python_version": "3.12.2"
+        }
+      }
+    },
+    {
+      "type": "notebook",
+      "url": "https://github.com/dandi-ai-notebooks/000563/blob/main/v4/0.250311.2145/claude-3.7-sonnet-prompt-f-2/000563.ipynb",
+      "dandiset_id": "000563",
+      "version": "0.250311.2145",
+      "model": "anthropic/claude-3.7-sonnet",
+      "prompt": "prompt-f-2",
+      "subfolder": "claude-3.7-sonnet-prompt-f-2",
+      "metadata": {
+        "dandiset_id": "000563",
+        "version": "0.250311.2145",
+        "model": "anthropic/claude-3.7-sonnet",
+        "prompt": "prompt-f-2.txt",
+        "total_prompt_tokens": 1924512,
+        "total_completion_tokens": 39768,
+        "total_vision_prompt_tokens": 6825,
+        "total_vision_completion_tokens": 1194,
+        "elapsed_time_seconds": 1722.141196012497,
+        "timestamp": "2025-05-12 16:11:44",
+        "system_info": {
+          "platform": "Linux-6.8.0-59-generic-x86_64-with-glibc2.35",
+          "hostname": "system76-pc",
+          "processor": "x86_64",
+          "python_version": "3.12.2"
+        }
+      }
+    },
+    {
+      "type": "notebook",
       "url": "https://github.com/dandi-ai-notebooks/000563/blob/main/v4/0.250311.2145/gpt-4.1-prompt-f-2/000563.ipynb",
       "dandiset_id": "000563",
       "version": "0.250311.2145",
@@ -7306,6 +7606,33 @@
         "total_vision_completion_tokens": 279,
         "elapsed_time_seconds": 172.62482142448425,
         "timestamp": "2025-05-09 16:31:22",
+        "system_info": {
+          "platform": "Linux-6.8.0-59-generic-x86_64-with-glibc2.35",
+          "hostname": "system76-pc",
+          "processor": "x86_64",
+          "python_version": "3.12.2"
+        }
+      }
+    },
+    {
+      "type": "notebook",
+      "url": "https://github.com/dandi-ai-notebooks/000563/blob/main/v4/0.250311.2145/gemini-2.5-pro-preview-prompt-g-2/000563.ipynb",
+      "dandiset_id": "000563",
+      "version": "0.250311.2145",
+      "model": "google/gemini-2.5-pro-preview",
+      "prompt": "prompt-g-2",
+      "subfolder": "gemini-2.5-pro-preview-prompt-g-2",
+      "metadata": {
+        "dandiset_id": "000563",
+        "version": "0.250311.2145",
+        "model": "google/gemini-2.5-pro-preview",
+        "prompt": "prompt-g-2.txt",
+        "total_prompt_tokens": 1126439,
+        "total_completion_tokens": 21135,
+        "total_vision_prompt_tokens": 634,
+        "total_vision_completion_tokens": 1953,
+        "elapsed_time_seconds": 583.278272151947,
+        "timestamp": "2025-05-12 16:13:02",
         "system_info": {
           "platform": "Linux-6.8.0-59-generic-x86_64-with-glibc2.35",
           "hostname": "system76-pc",
@@ -7397,6 +7724,33 @@
     },
     {
       "type": "notebook",
+      "url": "https://github.com/dandi-ai-notebooks/000563/blob/main/v4/0.250311.2145/claude-3.7-sonnet-prompt-non-2/000563.ipynb",
+      "dandiset_id": "000563",
+      "version": "0.250311.2145",
+      "model": "anthropic/claude-3.7-sonnet",
+      "prompt": "prompt-non-2",
+      "subfolder": "claude-3.7-sonnet-prompt-non-2",
+      "metadata": {
+        "dandiset_id": "000563",
+        "version": "0.250311.2145",
+        "model": "anthropic/claude-3.7-sonnet",
+        "prompt": "prompt-non-2.txt",
+        "total_prompt_tokens": 191925,
+        "total_completion_tokens": 9824,
+        "total_vision_prompt_tokens": 0,
+        "total_vision_completion_tokens": 0,
+        "elapsed_time_seconds": 270.3403203487396,
+        "timestamp": "2025-05-12 15:40:03",
+        "system_info": {
+          "platform": "Linux-6.8.0-59-generic-x86_64-with-glibc2.35",
+          "hostname": "system76-pc",
+          "processor": "x86_64",
+          "python_version": "3.12.2"
+        }
+      }
+    },
+    {
+      "type": "notebook",
       "url": "https://github.com/dandi-ai-notebooks/000563/blob/main/v4/0.250311.2145/gemini-2.5-flash-preview-prompt-non-2/000563.ipynb",
       "dandiset_id": "000563",
       "version": "0.250311.2145",
@@ -7414,6 +7768,60 @@
         "total_vision_completion_tokens": 0,
         "elapsed_time_seconds": 42.2796356678009,
         "timestamp": "2025-05-09 15:54:16",
+        "system_info": {
+          "platform": "Linux-6.8.0-59-generic-x86_64-with-glibc2.35",
+          "hostname": "system76-pc",
+          "processor": "x86_64",
+          "python_version": "3.12.2"
+        }
+      }
+    },
+    {
+      "type": "notebook",
+      "url": "https://github.com/dandi-ai-notebooks/000563/blob/main/v4/0.250311.2145/claude-3.7-sonnet-prompt-e-2/000563.ipynb",
+      "dandiset_id": "000563",
+      "version": "0.250311.2145",
+      "model": "anthropic/claude-3.7-sonnet",
+      "prompt": "prompt-e-2",
+      "subfolder": "claude-3.7-sonnet-prompt-e-2",
+      "metadata": {
+        "dandiset_id": "000563",
+        "version": "0.250311.2145",
+        "model": "anthropic/claude-3.7-sonnet",
+        "prompt": "prompt-e-2.txt",
+        "total_prompt_tokens": 175267,
+        "total_completion_tokens": 8288,
+        "total_vision_prompt_tokens": 0,
+        "total_vision_completion_tokens": 0,
+        "elapsed_time_seconds": 178.0576069355011,
+        "timestamp": "2025-05-12 15:43:01",
+        "system_info": {
+          "platform": "Linux-6.8.0-59-generic-x86_64-with-glibc2.35",
+          "hostname": "system76-pc",
+          "processor": "x86_64",
+          "python_version": "3.12.2"
+        }
+      }
+    },
+    {
+      "type": "notebook",
+      "url": "https://github.com/dandi-ai-notebooks/000563/blob/main/v4/0.250311.2145/gemini-2.5-pro-preview-prompt-e-2/000563.ipynb",
+      "dandiset_id": "000563",
+      "version": "0.250311.2145",
+      "model": "google/gemini-2.5-pro-preview",
+      "prompt": "prompt-e-2",
+      "subfolder": "gemini-2.5-pro-preview-prompt-e-2",
+      "metadata": {
+        "dandiset_id": "000563",
+        "version": "0.250311.2145",
+        "model": "google/gemini-2.5-pro-preview",
+        "prompt": "prompt-e-2.txt",
+        "total_prompt_tokens": 348636,
+        "total_completion_tokens": 10682,
+        "total_vision_prompt_tokens": 0,
+        "total_vision_completion_tokens": 0,
+        "elapsed_time_seconds": 166.33008337020874,
+        "timestamp": "2025-05-12 15:52:37",
         "system_info": {
           "platform": "Linux-6.8.0-59-generic-x86_64-with-glibc2.35",
           "hostname": "system76-pc",
