@@ -32,7 +32,8 @@ function App() {
     loadData();
   }, []);
 
-  const modelForReviews = 'claude-3.7-sonnet';
+  // const modelForReviews = 'claude-3.7-sonnet';
+  const modelForReviews = "gemini-2.5-pro-preview";
 
   const loadData = async () => {
     try {

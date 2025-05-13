@@ -6,7 +6,7 @@ from pathlib import Path
 from typing import Dict
 import yaml
 
-def process_qualification_test(file_path: str, rel_path: str) -> Dict:
+def process_qualification_test(file_path: str, rel_path: str, view_model: str) -> Dict:
     """Extract pass/fail result from qualification test file"""
     with open(file_path, 'r') as f:
         data = json.load(f)
@@ -20,18 +20,18 @@ def process_qualification_test(file_path: str, rel_path: str) -> Dict:
         "passing": data.get("passing", False)
     }
 
-def process_comparison_test(file_path: str, rel_path: str) -> Dict:
+def process_comparison_test(file_path: str, rel_path: str, review_model: str) -> Dict:
     """Extract selection from comparison test file"""
     with open(file_path, 'r') as f:
         data = json.load(f)
     paths = rel_path.split('/')
     return {
         "type": "comparison",
-        "model": paths[0],
-        "dandiset_id": paths[2],
-        "version": paths[3],
-        "subfolder1": paths[4],
-        "subfolder2": paths[6],
+        "model": review_model,
+        "dandiset_id": paths[1],
+        "version": paths[2],
+        "subfolder1": paths[3],
+        "subfolder2": paths[5],
         "selection": data.get("selection")
     }
 
@@ -49,21 +49,22 @@ def process_human_veto(file_path: str, dandiset_id: str, version: str, subfolder
         "vetoes": data
     }
 
-def process_rankings(file_path: str, rel_path: str) -> Dict:
+def process_rankings(file_path: str, rel_path: str, review_model: str) -> Dict:
     """Extract rankings from rankings.json file"""
     with open(file_path, 'r') as f:
         data = json.load(f)
     paths = rel_path.split('/')
     return {
         "type": "rankings",
-        "model": paths[0],
-        "dandiset_id": paths[2],
-        "version": paths[3],
+        "model": review_model,
+        "dandiset_id": paths[1],
+        "version": paths[2],
         "notebooks": data.get("ranked_notebooks", [])
     }
 
 def main():
-    reviews_dir = Path("reviews/gemini-2.5-pro-preview")
+    review_model = "gemini-2.5-pro-preview"
+    reviews_dir = Path(f"reviews/{review_model}")
     results = []
 
     # Recursively walk through reviews directory
@@ -78,15 +79,15 @@ def main():
             relative_path = file_path.relative_to(reviews_dir)
 
             if file == "qualification_test.json":
-                result = process_qualification_test(str(file_path), str(relative_path))
+                result = process_qualification_test(str(file_path), str(relative_path), review_model)
                 results.append(result)
 
             elif file == "comparison.json":
-                result = process_comparison_test(str(file_path), str(relative_path))
+                result = process_comparison_test(str(file_path), str(relative_path), review_model)
                 results.append(result)
 
             elif file == "rankings.json":
-                result = process_rankings(str(file_path), str(relative_path))
+                result = process_rankings(str(file_path), str(relative_path), review_model)
                 results.append(result)
 
     dandiset_repos_dir = Path("dandiset_repos")

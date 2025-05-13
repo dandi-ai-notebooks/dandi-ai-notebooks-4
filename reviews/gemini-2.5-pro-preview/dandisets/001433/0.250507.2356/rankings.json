@@ -11,12 +11,12 @@
             "losses": 1
         },
         {
-            "subfolder": "gemini-2.5-pro-preview-prompt-f-2",
+            "subfolder": "gemini-2.5-flash-preview-prompt-e-2",
             "wins": 2,
             "losses": 2
         },
         {
-            "subfolder": "gemini-2.5-flash-preview-prompt-e-2",
+            "subfolder": "gemini-2.5-pro-preview-prompt-f-2",
             "wins": 2,
             "losses": 2
         },
