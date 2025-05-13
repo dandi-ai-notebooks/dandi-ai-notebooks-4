@@ -3333,6 +3333,20 @@
       }
     },
     {
+      "type": "human_veto",
+      "dandiset_id": "001333",
+      "version": "0.250327.2220",
+      "model": "anthropic/claude-3.7-sonnet",
+      "prompt": "prompt-g-2",
+      "subfolder": "claude-3.7-sonnet-prompt-g-2",
+      "vetoes": [
+        {
+          "user": "magland",
+          "reason": "The parkinsonian and healthy LFPs show exactly the same data, so something is not right. It's unclear how the asset IDs for these were obtained.\n"
+        }
+      ]
+    },
+    {
       "type": "notebook",
       "url": "https://github.com/dandi-ai-notebooks/001333/blob/main/v4/0.250327.2220/claude-3.7-sonnet-prompt-g-2/001333.ipynb",
       "dandiset_id": "001333",
