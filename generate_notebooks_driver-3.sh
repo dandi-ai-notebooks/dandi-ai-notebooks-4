@@ -21,8 +21,8 @@ for entry in "${DANDISET_IDS_AND_VERSIONS[@]}"; do
     # MODEL=google/gemini-2.5-flash-preview
     # MODEL=google/gemini-2.5-pro-preview
     # MODEL=openai/o4-mini-high
-    # MODEL=openai/gpt-4.1
-    MODEL=anthropic/claude-3.7-sonnet
+    MODEL=openai/gpt-4.1
+    # MODEL=anthropic/claude-3.7-sonnet
 
     # non-agentic
     PROMPT=prompt-non-2
