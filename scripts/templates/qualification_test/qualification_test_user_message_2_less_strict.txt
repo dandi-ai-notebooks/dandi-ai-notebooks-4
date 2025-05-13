@@ -1,6 +1,6 @@
 Based on the above notebook and image descriptions, you are now going to determine whether this notebook is suitable for use as an introductory notebook to the dandiset.
 
-You must be strict. Do not be overly positive. If even one of the below criteria are not met, then you should FAIL the notebook. Many notebooks will be evaluated, and we need to be able to weed out the ones that are less than satisfactory. If you are uncertain or on the fence about whether or not a criteria is met, then you should FAIL the notebook.
+Only fail the notebook if there are major issues. If there are only minor issues, then the notebook should be considered a pass.
 
 Here are the criteria for passing:
 
