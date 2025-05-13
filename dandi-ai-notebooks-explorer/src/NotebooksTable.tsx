@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 import { Metadata, NotebookRecord } from './types';
+import { Button } from '@mui/material';
 import {
   Table,
   TableBody,
@@ -173,6 +174,43 @@ export default function NotebooksTable({ notebooks, qualResults, rankResults, mo
           ))}
         </Select>
       </FormControl>
+
+      <Button
+        variant="contained"
+        sx={{ mb: 2, ml: 2 }}
+        onClick={() => {
+          // Convert data to CSV
+          const headers = ['Notebook', 'Subfolder', 'Dandiset', 'Model', 'Prompt', 'Est. Cost', 'Qual', 'Rank', 'Human Veto'];
+          const rows = filteredAndSortedNotebooks.map(notebook => {
+            const notebookKey = `${notebook.dandiset_id}/${notebook.version}/${notebook.subfolder}`;
+            const isQual = qualResults.get(notebookKey) ? '✓' : '✗';
+            const rank = rankResults.get(notebookKey);
+            const vetoes = vetoResults.get(notebookKey);
+            const vetoText = vetoes?.length ? '✗' : '';
+
+            return [
+              notebook.dandiset_id + '.ipynb',
+              notebook.subfolder,
+              notebook.dandiset_id,
+              notebook.model.split('/')[1] || notebook.model,
+              notebook.prompt,
+              calculateEstimatedCost(notebook.metadata)?.toFixed(2) || 'N/A',
+              isQual,
+              rank || '',
+              vetoText
+            ].join(',');
+          });
+
+          const csvContent = [headers.join(','), ...rows].join('\n');
+          const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+          const link = document.createElement('a');
+          link.href = URL.createObjectURL(blob);
+          link.download = 'notebooks.csv';
+          link.click();
+        }}
+      >
+        Download as CSV
+      </Button>
 
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }}>
