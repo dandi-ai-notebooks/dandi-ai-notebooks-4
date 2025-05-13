@@ -3915,6 +3915,20 @@
       }
     },
     {
+      "type": "human_veto",
+      "dandiset_id": "001354",
+      "version": "0.250312.0036",
+      "model": "openai/gpt-4.1",
+      "prompt": "prompt-f-2",
+      "subfolder": "gpt-4.1-prompt-f-2",
+      "vetoes": [
+        {
+          "user": "magland",
+          "reason": "The plot showing the applied stimulus is a line of all zeros.\n"
+        }
+      ]
+    },
+    {
       "type": "notebook",
       "url": "https://github.com/dandi-ai-notebooks/001354/blob/main/v4/0.250312.0036/gpt-4.1-prompt-f-2/001354.ipynb",
       "dandiset_id": "001354",
