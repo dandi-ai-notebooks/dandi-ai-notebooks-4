@@ -14,9 +14,9 @@ def process_qualification_test(file_path: str, rel_path: str) -> Dict:
     return {
         "type": "qualification_test",
         "model": paths[0],
-        "dandiset_id": paths[2],
-        "version": paths[3],
-        "subfolder": paths[4],
+        "dandiset_id": paths[1],
+        "version": paths[2],
+        "subfolder": paths[3],
         "passing": data.get("passing", False)
     }
 
@@ -63,7 +63,7 @@ def process_rankings(file_path: str, rel_path: str) -> Dict:
     }
 
 def main():
-    reviews_dir = Path("reviews")
+    reviews_dir = Path("reviews/gemini-2.5-pro-preview")
     results = []
 
     # Recursively walk through reviews directory
@@ -108,11 +108,13 @@ def main():
                     continue
                 config_fname = subfolder / "config.yaml"
                 if not config_fname.exists():
+                    raise Exception(f"Config file {config_fname} does not exist")
                     continue
                 with open(config_fname, 'r') as f:
                     config = yaml.safe_load(f)
                 metadata_fname = subfolder / "metadata.json"
                 if not metadata_fname.exists():
+                    print(f'==== Metadata file {metadata_fname} does not exist. Skipping.')
                     continue
                 with open(metadata_fname, 'r') as f:
                     metadata = json.load(f)

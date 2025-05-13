@@ -7,7 +7,7 @@ from scripts.helpers.rank_notebooks import rank_notebooks, suggest_next_comparis
 
 this_dir = Path(__file__).parent
 
-def process_dandiset(*, dandiset_id: str, version: str, review_model: str):
+def process_dandiset(*, dandiset_id: str, version: str, review_model: str, less_strict: bool):
     dandiset_folder = f'{this_dir}/dandiset_repos/{dandiset_id}/v4/{version}'
     if not os.path.exists(dandiset_folder):
         raise RuntimeError(f"Dandiset folder {dandiset_folder} does not exist")
@@ -29,6 +29,8 @@ def process_dandiset(*, dandiset_id: str, version: str, review_model: str):
             print(f"Qualification test file {qualification_test_fname} exists")
         else:
             cmd = f'./scripts/qualification_test.py  --dandiset_id {dandiset_id} --version {version} --model {review_model} --subfolder_name {subdir}'
+            if less_strict:
+                cmd = cmd + ' --less_strict'
             print(f"Running command: {cmd}")
             result = os.system(cmd)
             if result != 0:
@@ -161,11 +163,18 @@ def process_dandiset(*, dandiset_id: str, version: str, review_model: str):
             f.write(f'| {subfolder1} | {subfolder2} | [{selection}]({json_path}) |\n')
 
 def main():
-    review_model = "anthropic/claude-3.7-sonnet"
+    # review_model = "anthropic/claude-3.7-sonnet"
+    # less_strict = False
+
+    review_model = "google/gemini-2.5-pro-preview"
+    # need to use a less strict prompt when using gemini compared to claude
+    less_strict = True
+
+
     dandiset_repos_dir = f'{this_dir}/dandiset_repos'
     if not os.path.exists(dandiset_repos_dir):
         raise RuntimeError(f"Dandiset repos folder {dandiset_repos_dir} does not exist")
-    for dandiset_id in os.listdir(dandiset_repos_dir):
+    for dandiset_id in sorted(os.listdir(dandiset_repos_dir)):
         if not os.path.isdir(os.path.join(dandiset_repos_dir, dandiset_id)):
             continue
         dandiset_dir = os.path.join(dandiset_repos_dir, dandiset_id, 'v4')
@@ -175,7 +184,7 @@ def main():
             if not os.path.isdir(os.path.join(dandiset_dir, version)):
                 continue
             print(f"Processing dandiset {dandiset_id} version {version}")
-            process_dandiset(dandiset_id=dandiset_id, version=version, review_model=review_model)
+            process_dandiset(dandiset_id=dandiset_id, version=version, review_model=review_model, less_strict=less_strict)
 
 if __name__ == '__main__':
     main()

@@ -186,6 +186,58 @@ plt.tight_layout()
 plt.show()
 
 # %%
+# Analyze qualification test results
+qualification_tests = [x for x in X['results'] if x['type'] == 'qualification_test']
+
+# Create a dictionary to store pass/fail counts for each model/prompt combination
+pass_fail_counts = {}
+
+for test in qualification_tests:
+    model = test['model']
+    subfolder = test['subfolder']
+    key = f"{model}-{subfolder}"
+    print(key)
+
+    if key not in pass_fail_counts:
+        pass_fail_counts[key] = {'pass': 0, 'fail': 0}
+
+    if test['passing']:
+        pass_fail_counts[key]['pass'] += 1
+    else:
+        pass_fail_counts[key]['fail'] += 1
+
+# Convert to DataFrame for better display
+pass_fail_df = pd.DataFrame.from_dict(pass_fail_counts, orient='index')
+pass_fail_df.sort_index(inplace=True)
+print("\nQualification Test Results (Pass/Fail counts):")
+print(pass_fail_df)
+
+# Create stacked bar plot
+plt.figure(figsize=(12, 6))
+pass_fail_df.plot(kind='barh', stacked=True)
+plt.title('Qualification Test Results by Model/Prompt')
+plt.xlabel('Number of Tests')
+plt.ylabel('Model-Prompt Combination')
+
+# Add value labels on the bars
+for c in pass_fail_df.columns:
+    # Get the values and positions
+    vals = pass_fail_df[c]
+    # For 'pass' start from 0, for 'fail' start from 'pass' values
+    if c == 'pass':
+        xpos = vals/2
+    else:
+        xpos = pass_fail_df['pass'] + vals/2
+
+    # Add text annotations
+    for i, (v, x) in enumerate(zip(vals, xpos)):
+        if v != 0:  # Only add label if value is not zero
+            plt.text(x, i, str(int(v)),
+                    ha='center', va='center')
+
+plt.tight_layout()
+plt.show()
+# %%
 # Aggregate by model (gpt-4.1, gemini-2.5-flash-preview, etc.)
 df_by_model = pd.DataFrame()
 

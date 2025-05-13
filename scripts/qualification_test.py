@@ -134,7 +134,7 @@ def parse_review_xml(xml_text: str):
         passing = False
     return passing, thinking
 
-def run_qualification_test_for_notebook(*, notebook_path: str, model: str):
+def run_qualification_test_for_notebook(*, notebook_path: str, model: str, less_strict: bool):
     with open(notebook_path, 'r') as f:
         notebook = json.load(f)
     cells = notebook.get('cells', [])
@@ -189,6 +189,8 @@ def run_qualification_test_for_notebook(*, notebook_path: str, model: str):
     messages = new_messages # very important to update messages with the new messages from the model
 
     user_message_2 = read_template_prompt("qualification_test_user_message_2.txt")
+    if less_strict:
+        user_message_2 = read_template_prompt("qualification_test_user_message_2_less_strict.txt")
     messages.append(
         {
             "role": "user",
@@ -224,11 +226,11 @@ def run_qualification_test_for_notebook(*, notebook_path: str, model: str):
     }
 
 
-def run_qualification_test(*, model: str, dandiset_id: str, version: str, subfolder_name: str):
+def run_qualification_test(*, model: str, dandiset_id: str, version: str, subfolder_name: str, less_strict: bool):
     notebook_path = get_notebook_path(dandiset_id=dandiset_id, version=version, subfolder_name=subfolder_name)
     if notebook_path is None:
         raise ValueError(f"Notebook not found at {notebook_path}")
-    return run_qualification_test_for_notebook(notebook_path=notebook_path, model=model)
+    return run_qualification_test_for_notebook(notebook_path=notebook_path, model=model, less_strict=less_strict)
 
 def main():
     # get dandiset_id, subfolder_name, model from command line arguments
@@ -238,6 +240,7 @@ def main():
     parser.add_argument("--version", type=str, required=True, help="Version")
     parser.add_argument("--subfolder_name", type=str, required=True, help="Subfolder name")
     parser.add_argument("--model", type=str, required=True, help="Model name")
+    parser.add_argument("--less_strict", action="store_true", help="Less strict mode")
     args = parser.parse_args()
     dandiset_id = args.dandiset_id
     version = args.version
@@ -253,7 +256,7 @@ def main():
         with open(test_result_path, 'r') as f:
             result = json.load(f)
     else:
-        result = run_qualification_test(model=model, dandiset_id=dandiset_id, version=version, subfolder_name=subfolder_name)
+        result = run_qualification_test(model=model, dandiset_id=dandiset_id, version=version, subfolder_name=subfolder_name, less_strict=args.less_strict)
         with open(test_result_path, 'w') as f:
             json.dump(result, f, indent=4)
         thinking_output_path = f'{this_dir}/../reviews/{model_second_part}/dandisets/{dandiset_id}/{version}/{subfolder_name}/qualification_test_thinking.md'
