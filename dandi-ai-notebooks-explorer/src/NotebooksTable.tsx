@@ -123,8 +123,10 @@ export default function NotebooksTable({ notebooks, qualResults, rankResults, mo
           : bVetoes - aVetoes;
       }
 
-      let aValue: string | number = 0;
-      let bValue: string | number = 0;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      let aValue: string | number = (a as any)[sortConfig.key] || '';
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      let bValue: string | number = (b as any)[sortConfig.key] || '';
 
       if (sortConfig.key === 'model') {
         aValue = a.model.split('/')[1] || '';
