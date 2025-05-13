@@ -3847,6 +3847,20 @@
       }
     },
     {
+      "type": "human_veto",
+      "dandiset_id": "001354",
+      "version": "0.250312.0036",
+      "model": "google/gemini-2.5-pro-preview",
+      "prompt": "prompt-f-2",
+      "subfolder": "gemini-2.5-pro-preview-prompt-f-2",
+      "vetoes": [
+        {
+          "user": "magland",
+          "reason": "The plots and interpretations don't make sense."
+        }
+      ]
+    },
+    {
       "type": "notebook",
       "url": "https://github.com/dandi-ai-notebooks/001354/blob/main/v4/0.250312.0036/gemini-2.5-pro-preview-prompt-f-2/001354.ipynb",
       "dandiset_id": "001354",
