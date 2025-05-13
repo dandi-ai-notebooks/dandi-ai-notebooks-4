@@ -1216,12 +1216,97 @@
       "passing": false
     },
     {
+      "type": "rankings",
+      "model": "dandisets",
+      "dandiset_id": "0.250324.1603",
+      "version": "rankings.json",
+      "notebooks": [
+        {
+          "subfolder": "gemini-2.5-pro-preview-prompt-g-2",
+          "wins": 4,
+          "losses": 0
+        },
+        {
+          "subfolder": "gemini-2.5-flash-preview-prompt-g-2",
+          "wins": 6,
+          "losses": 2
+        },
+        {
+          "subfolder": "gemini-2.5-pro-preview-prompt-f-2",
+          "wins": 5,
+          "losses": 2
+        },
+        {
+          "subfolder": "gpt-4.1-prompt-g-2",
+          "wins": 4,
+          "losses": 2
+        },
+        {
+          "subfolder": "gpt-4.1-prompt-e-2",
+          "wins": 3,
+          "losses": 4
+        },
+        {
+          "subfolder": "gpt-4.1-prompt-f-2",
+          "wins": 3,
+          "losses": 5
+        },
+        {
+          "subfolder": "gemini-2.5-pro-preview-prompt-e-2",
+          "wins": 3,
+          "losses": 5
+        },
+        {
+          "subfolder": "claude-3.7-sonnet-prompt-g-2",
+          "wins": 2,
+          "losses": 2
+        },
+        {
+          "subfolder": "gemini-2.5-flash-preview-prompt-f-2",
+          "wins": 1,
+          "losses": 4
+        },
+        {
+          "subfolder": "gemini-2.5-flash-preview-prompt-e-2",
+          "wins": 1,
+          "losses": 6
+        }
+      ]
+    },
+    {
       "type": "qualification_test",
       "model": "dandisets",
       "dandiset_id": "001366",
       "version": "0.250324.1603",
       "subfolder": "gpt-4.1-prompt-e-2",
       "passing": true
+    },
+    {
+      "type": "comparison",
+      "model": "dandisets",
+      "dandiset_id": "0.250324.1603",
+      "version": "gpt-4.1-prompt-e-2",
+      "subfolder1": "comparisons",
+      "subfolder2": "comparison.json",
+      "selection": 2
+    },
+    {
+      "type": "comparison",
+      "model": "dandisets",
+      "dandiset_id": "0.250324.1603",
+      "version": "gpt-4.1-prompt-e-2",
+      "subfolder1": "comparisons",
+      "subfolder2": "comparison.json",
+      "selection": 1
+    },
+    {
+      "type": "comparison",
+      "model": "dandisets",
+      "dandiset_id": "0.250324.1603",
+      "version": "gpt-4.1-prompt-e-2",
+      "subfolder1": "comparisons",
+      "subfolder2": "comparison.json",
+      "selection": 2
     },
     {
       "type": "qualification_test",
@@ -1232,12 +1317,57 @@
       "passing": true
     },
     {
+      "type": "comparison",
+      "model": "dandisets",
+      "dandiset_id": "0.250324.1603",
+      "version": "claude-3.7-sonnet-prompt-g-2",
+      "subfolder1": "comparisons",
+      "subfolder2": "comparison.json",
+      "selection": 1
+    },
+    {
       "type": "qualification_test",
       "model": "dandisets",
       "dandiset_id": "001366",
       "version": "0.250324.1603",
       "subfolder": "gemini-2.5-flash-preview-prompt-f-2",
       "passing": true
+    },
+    {
+      "type": "comparison",
+      "model": "dandisets",
+      "dandiset_id": "0.250324.1603",
+      "version": "gemini-2.5-flash-preview-prompt-f-2",
+      "subfolder1": "comparisons",
+      "subfolder2": "comparison.json",
+      "selection": 2
+    },
+    {
+      "type": "comparison",
+      "model": "dandisets",
+      "dandiset_id": "0.250324.1603",
+      "version": "gemini-2.5-flash-preview-prompt-f-2",
+      "subfolder1": "comparisons",
+      "subfolder2": "comparison.json",
+      "selection": 2
+    },
+    {
+      "type": "comparison",
+      "model": "dandisets",
+      "dandiset_id": "0.250324.1603",
+      "version": "gemini-2.5-flash-preview-prompt-f-2",
+      "subfolder1": "comparisons",
+      "subfolder2": "comparison.json",
+      "selection": 1
+    },
+    {
+      "type": "comparison",
+      "model": "dandisets",
+      "dandiset_id": "0.250324.1603",
+      "version": "gemini-2.5-flash-preview-prompt-f-2",
+      "subfolder1": "comparisons",
+      "subfolder2": "comparison.json",
+      "selection": 2
     },
     {
       "type": "qualification_test",
@@ -1248,12 +1378,66 @@
       "passing": true
     },
     {
+      "type": "comparison",
+      "model": "dandisets",
+      "dandiset_id": "0.250324.1603",
+      "version": "gemini-2.5-pro-preview-prompt-f-2",
+      "subfolder1": "comparisons",
+      "subfolder2": "comparison.json",
+      "selection": 1
+    },
+    {
+      "type": "comparison",
+      "model": "dandisets",
+      "dandiset_id": "0.250324.1603",
+      "version": "gemini-2.5-pro-preview-prompt-f-2",
+      "subfolder1": "comparisons",
+      "subfolder2": "comparison.json",
+      "selection": 1
+    },
+    {
       "type": "qualification_test",
       "model": "dandisets",
       "dandiset_id": "001366",
       "version": "0.250324.1603",
       "subfolder": "gpt-4.1-prompt-f-2",
       "passing": true
+    },
+    {
+      "type": "comparison",
+      "model": "dandisets",
+      "dandiset_id": "0.250324.1603",
+      "version": "gpt-4.1-prompt-f-2",
+      "subfolder1": "comparisons",
+      "subfolder2": "comparison.json",
+      "selection": 2
+    },
+    {
+      "type": "comparison",
+      "model": "dandisets",
+      "dandiset_id": "0.250324.1603",
+      "version": "gpt-4.1-prompt-f-2",
+      "subfolder1": "comparisons",
+      "subfolder2": "comparison.json",
+      "selection": 2
+    },
+    {
+      "type": "comparison",
+      "model": "dandisets",
+      "dandiset_id": "0.250324.1603",
+      "version": "gpt-4.1-prompt-f-2",
+      "subfolder1": "comparisons",
+      "subfolder2": "comparison.json",
+      "selection": 2
+    },
+    {
+      "type": "comparison",
+      "model": "dandisets",
+      "dandiset_id": "0.250324.1603",
+      "version": "gpt-4.1-prompt-f-2",
+      "subfolder1": "comparisons",
+      "subfolder2": "comparison.json",
+      "selection": 1
     },
     {
       "type": "qualification_test",
@@ -1264,6 +1448,33 @@
       "passing": true
     },
     {
+      "type": "comparison",
+      "model": "dandisets",
+      "dandiset_id": "0.250324.1603",
+      "version": "gemini-2.5-pro-preview-prompt-g-2",
+      "subfolder1": "comparisons",
+      "subfolder2": "comparison.json",
+      "selection": 1
+    },
+    {
+      "type": "comparison",
+      "model": "dandisets",
+      "dandiset_id": "0.250324.1603",
+      "version": "gemini-2.5-pro-preview-prompt-g-2",
+      "subfolder1": "comparisons",
+      "subfolder2": "comparison.json",
+      "selection": 1
+    },
+    {
+      "type": "comparison",
+      "model": "dandisets",
+      "dandiset_id": "0.250324.1603",
+      "version": "gemini-2.5-pro-preview-prompt-g-2",
+      "subfolder1": "comparisons",
+      "subfolder2": "comparison.json",
+      "selection": 1
+    },
+    {
       "type": "qualification_test",
       "model": "dandisets",
       "dandiset_id": "001366",
@@ -1272,12 +1483,93 @@
       "passing": true
     },
     {
+      "type": "comparison",
+      "model": "dandisets",
+      "dandiset_id": "0.250324.1603",
+      "version": "gemini-2.5-flash-preview-prompt-g-2",
+      "subfolder1": "comparisons",
+      "subfolder2": "comparison.json",
+      "selection": 1
+    },
+    {
+      "type": "comparison",
+      "model": "dandisets",
+      "dandiset_id": "0.250324.1603",
+      "version": "gemini-2.5-flash-preview-prompt-g-2",
+      "subfolder1": "comparisons",
+      "subfolder2": "comparison.json",
+      "selection": 1
+    },
+    {
+      "type": "comparison",
+      "model": "dandisets",
+      "dandiset_id": "0.250324.1603",
+      "version": "gemini-2.5-flash-preview-prompt-g-2",
+      "subfolder1": "comparisons",
+      "subfolder2": "comparison.json",
+      "selection": 1
+    },
+    {
+      "type": "comparison",
+      "model": "dandisets",
+      "dandiset_id": "0.250324.1603",
+      "version": "gemini-2.5-flash-preview-prompt-g-2",
+      "subfolder1": "comparisons",
+      "subfolder2": "comparison.json",
+      "selection": 2
+    },
+    {
+      "type": "comparison",
+      "model": "dandisets",
+      "dandiset_id": "0.250324.1603",
+      "version": "gemini-2.5-flash-preview-prompt-g-2",
+      "subfolder1": "comparisons",
+      "subfolder2": "comparison.json",
+      "selection": 1
+    },
+    {
       "type": "qualification_test",
       "model": "dandisets",
       "dandiset_id": "001366",
       "version": "0.250324.1603",
       "subfolder": "gemini-2.5-flash-preview-prompt-e-2",
       "passing": true
+    },
+    {
+      "type": "comparison",
+      "model": "dandisets",
+      "dandiset_id": "0.250324.1603",
+      "version": "gemini-2.5-flash-preview-prompt-e-2",
+      "subfolder1": "comparisons",
+      "subfolder2": "comparison.json",
+      "selection": 2
+    },
+    {
+      "type": "comparison",
+      "model": "dandisets",
+      "dandiset_id": "0.250324.1603",
+      "version": "gemini-2.5-flash-preview-prompt-e-2",
+      "subfolder1": "comparisons",
+      "subfolder2": "comparison.json",
+      "selection": 1
+    },
+    {
+      "type": "comparison",
+      "model": "dandisets",
+      "dandiset_id": "0.250324.1603",
+      "version": "gemini-2.5-flash-preview-prompt-e-2",
+      "subfolder1": "comparisons",
+      "subfolder2": "comparison.json",
+      "selection": 2
+    },
+    {
+      "type": "comparison",
+      "model": "dandisets",
+      "dandiset_id": "0.250324.1603",
+      "version": "gemini-2.5-flash-preview-prompt-e-2",
+      "subfolder1": "comparisons",
+      "subfolder2": "comparison.json",
+      "selection": 2
     },
     {
       "type": "qualification_test",
@@ -1294,6 +1586,68 @@
       "version": "0.250324.1603",
       "subfolder": "gpt-4.1-prompt-g-2",
       "passing": true
+    },
+    {
+      "type": "comparison",
+      "model": "dandisets",
+      "dandiset_id": "0.250324.1603",
+      "version": "gpt-4.1-prompt-g-2",
+      "subfolder1": "comparisons",
+      "subfolder2": "comparison.json",
+      "selection": 1
+    },
+    {
+      "type": "comparison",
+      "model": "dandisets",
+      "dandiset_id": "0.250324.1603",
+      "version": "gpt-4.1-prompt-g-2",
+      "subfolder1": "comparisons",
+      "subfolder2": "comparison.json",
+      "selection": 2
+    },
+    {
+      "type": "qualification_test",
+      "model": "dandisets",
+      "dandiset_id": "001366",
+      "version": "0.250324.1603",
+      "subfolder": "gemini-2.5-pro-preview-prompt-e-2",
+      "passing": true
+    },
+    {
+      "type": "comparison",
+      "model": "dandisets",
+      "dandiset_id": "0.250324.1603",
+      "version": "gemini-2.5-pro-preview-prompt-e-2",
+      "subfolder1": "comparisons",
+      "subfolder2": "comparison.json",
+      "selection": 2
+    },
+    {
+      "type": "comparison",
+      "model": "dandisets",
+      "dandiset_id": "0.250324.1603",
+      "version": "gemini-2.5-pro-preview-prompt-e-2",
+      "subfolder1": "comparisons",
+      "subfolder2": "comparison.json",
+      "selection": 1
+    },
+    {
+      "type": "comparison",
+      "model": "dandisets",
+      "dandiset_id": "0.250324.1603",
+      "version": "gemini-2.5-pro-preview-prompt-e-2",
+      "subfolder1": "comparisons",
+      "subfolder2": "comparison.json",
+      "selection": 1
+    },
+    {
+      "type": "comparison",
+      "model": "dandisets",
+      "dandiset_id": "0.250324.1603",
+      "version": "gemini-2.5-pro-preview-prompt-e-2",
+      "subfolder1": "comparisons",
+      "subfolder2": "comparison.json",
+      "selection": 2
     },
     {
       "type": "rankings",
@@ -1469,17 +1823,17 @@
           "losses": 0
         },
         {
+          "subfolder": "gemini-2.5-flash-preview-prompt-g-2",
+          "wins": 3,
+          "losses": 2
+        },
+        {
           "subfolder": "gemini-2.5-pro-preview-prompt-f-2",
           "wins": 3,
           "losses": 2
         },
         {
           "subfolder": "gemini-2.5-pro-preview-prompt-e-2",
-          "wins": 3,
-          "losses": 2
-        },
-        {
-          "subfolder": "gemini-2.5-flash-preview-prompt-g-2",
           "wins": 3,
           "losses": 2
         },
@@ -2508,12 +2862,12 @@
           "losses": 3
         },
         {
-          "subfolder": "gemini-2.5-pro-preview-prompt-f-2",
+          "subfolder": "gemini-2.5-flash-preview-prompt-g-2",
           "wins": 4,
           "losses": 3
         },
         {
-          "subfolder": "gemini-2.5-flash-preview-prompt-g-2",
+          "subfolder": "gemini-2.5-pro-preview-prompt-f-2",
           "wins": 4,
           "losses": 3
         },
@@ -5171,6 +5525,33 @@
     },
     {
       "type": "notebook",
+      "url": "https://github.com/dandi-ai-notebooks/001366/blob/main/v4/0.250324.1603/claude-3.7-sonnet-prompt-f-2/001366.ipynb",
+      "dandiset_id": "001366",
+      "version": "0.250324.1603",
+      "model": "anthropic/claude-3.7-sonnet",
+      "prompt": "prompt-f-2",
+      "subfolder": "claude-3.7-sonnet-prompt-f-2",
+      "metadata": {
+        "dandiset_id": "001366",
+        "version": "0.250324.1603",
+        "model": "anthropic/claude-3.7-sonnet",
+        "prompt": "prompt-f-2.txt",
+        "total_prompt_tokens": 1567928,
+        "total_completion_tokens": 36196,
+        "total_vision_prompt_tokens": 18781,
+        "total_vision_completion_tokens": 3092,
+        "elapsed_time_seconds": 1035.3066263198853,
+        "timestamp": "2025-05-13 10:01:22",
+        "system_info": {
+          "platform": "Linux-6.8.0-59-generic-x86_64-with-glibc2.35",
+          "hostname": "system76-pc",
+          "processor": "x86_64",
+          "python_version": "3.12.2"
+        }
+      }
+    },
+    {
+      "type": "notebook",
       "url": "https://github.com/dandi-ai-notebooks/001366/blob/main/v4/0.250324.1603/gpt-4.1-prompt-f-2/001366.ipynb",
       "dandiset_id": "001366",
       "version": "0.250324.1603",
@@ -6737,6 +7118,33 @@
     },
     {
       "type": "notebook",
+      "url": "https://github.com/dandi-ai-notebooks/000690/blob/main/v4/0.250326.0015/claude-3.7-sonnet-prompt-g-2/000690.ipynb",
+      "dandiset_id": "000690",
+      "version": "0.250326.0015",
+      "model": "anthropic/claude-3.7-sonnet",
+      "prompt": "prompt-g-2",
+      "subfolder": "claude-3.7-sonnet-prompt-g-2",
+      "metadata": {
+        "dandiset_id": "000690",
+        "version": "0.250326.0015",
+        "model": "anthropic/claude-3.7-sonnet",
+        "prompt": "prompt-g-2.txt",
+        "total_prompt_tokens": 2175766,
+        "total_completion_tokens": 38913,
+        "total_vision_prompt_tokens": 12418,
+        "total_vision_completion_tokens": 1894,
+        "elapsed_time_seconds": 1440,
+        "timestamp": "2025-05-13 09:56:04",
+        "system_info": {
+          "platform": "Linux-6.8.0-59-generic-x86_64-with-glibc2.35",
+          "hostname": "system76-pc",
+          "processor": "x86_64",
+          "python_version": "3.12.2"
+        }
+      }
+    },
+    {
+      "type": "notebook",
       "url": "https://github.com/dandi-ai-notebooks/000690/blob/main/v4/0.250326.0015/gemini-2.5-flash-preview-prompt-f-2/000690.ipynb",
       "dandiset_id": "000690",
       "version": "0.250326.0015",
@@ -6781,6 +7189,33 @@
         "total_vision_completion_tokens": 3458,
         "elapsed_time_seconds": 576.1630821228027,
         "timestamp": "2025-05-09 14:17:34",
+        "system_info": {
+          "platform": "Linux-6.8.0-59-generic-x86_64-with-glibc2.35",
+          "hostname": "system76-pc",
+          "processor": "x86_64",
+          "python_version": "3.12.2"
+        }
+      }
+    },
+    {
+      "type": "notebook",
+      "url": "https://github.com/dandi-ai-notebooks/000690/blob/main/v4/0.250326.0015/claude-3.7-sonnet-prompt-f-2/000690.ipynb",
+      "dandiset_id": "000690",
+      "version": "0.250326.0015",
+      "model": "anthropic/claude-3.7-sonnet",
+      "prompt": "prompt-f-2",
+      "subfolder": "claude-3.7-sonnet-prompt-f-2",
+      "metadata": {
+        "dandiset_id": "000690",
+        "version": "0.250326.0015",
+        "model": "anthropic/claude-3.7-sonnet",
+        "prompt": "prompt-f-2.txt",
+        "total_prompt_tokens": 2268577,
+        "total_completion_tokens": 14011,
+        "total_vision_prompt_tokens": 8038,
+        "total_vision_completion_tokens": 1560,
+        "elapsed_time_seconds": 720.4494452476501,
+        "timestamp": "2025-05-13 09:19:05",
         "system_info": {
           "platform": "Linux-6.8.0-59-generic-x86_64-with-glibc2.35",
           "hostname": "system76-pc",

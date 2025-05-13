@@ -47,8 +47,10 @@ for test in qualification_tests:
         pass_fail_counts[key]['fail'] = pass_fail_counts[key]['fail'] + 1
 
 def clean_model_name(name):
-    # Remove 'dandisets-' prefix if present
-    return name.replace('dandisets-', '')
+    # Remove 'dandisets-' prefix and '-preview' suffix if present
+    name = name.replace('dandisets-', '')
+    name = name.replace('-preview', '')
+    return name
 
 # Convert counts to DataFrame with formatted model/prompt names
 prompt_map = {'e-2': 'A', 'f-2': 'B', 'g-2': 'C'}
@@ -60,11 +62,12 @@ for key, counts in pass_fail_counts.items():
     formatted_counts[new_key] = counts
 
 pass_fail_df = pd.DataFrame.from_dict(formatted_counts, orient='index')
-pass_fail_df.sort_index(inplace=True)
+pass_fail_df = pass_fail_df.reindex(sorted(formatted_counts.keys(), reverse=True))
 
 # Plot 1: Qualification Test Results
-plt.figure(figsize=(12, 8))
+plt.figure(figsize=(14, 8))
 ax = pass_fail_df.plot(kind='barh', stacked=True)
+plt.legend(bbox_to_anchor=(1.02, 1), loc='upper left')
 plt.title('Qualification Test Results by Model/Prompt', pad=20)
 plt.xlabel('Number of Tests')
 plt.ylabel('Model-Prompt Combination')
@@ -105,13 +108,23 @@ for r in rankings_list:
         df.loc[dandiset, n['subfolder']] = i + 1
 
 # Plot 2: Top Rankings by Model/Prompt Pair
-num_first_place = (df == 1).sum().sort_values(ascending=True)
+# Format and sort labels consistently with qualification test plot
+formatted_labels = {}
+for label in df.columns:
+    model, prompt = label.rsplit('-prompt-', 1)
+    model = clean_model_name(model)
+    formatted_labels[label] = f"{model} {prompt_map[prompt]}"
 
-plt.figure(figsize=(12, 8))
+num_first_place = (df == 1).sum()
+# Create new Series with formatted labels
+num_first_place = pd.Series(
+    num_first_place.values,
+    index=[formatted_labels[col] for col in num_first_place.index]
+).sort_index(ascending=False)
+
+plt.figure(figsize=(14, 8))
 bars = plt.barh(range(len(num_first_place)), num_first_place.values.astype(float))
-# Clean model names in the labels
-cleaned_labels = [label.replace('dandisets-', '') for label in num_first_place.index]
-plt.yticks(range(len(num_first_place)), cleaned_labels)
+plt.yticks(range(len(num_first_place)), list(num_first_place.index))
 plt.xlabel('Number of #1 Rankings')
 plt.title('Number of Times Each Model/Prompt Was Ranked #1', pad=20)
 
@@ -130,21 +143,20 @@ def get_model_name(col):
     parts = col.split('-prompt-')
     return parts[0]
 
-# Get unique models
-models = sorted(set(get_model_name(col) for col in df.columns))
+# Get unique models and clean their names
+models = sorted(set(clean_model_name(get_model_name(col)) for col in df.columns))
 
 # Count number of times each model was ranked #1
 num_first_by_model = {
-    model: ((df[[col for col in df.columns if col.startswith(model)]]) == 1).sum().sum()
-    for model in models
+    clean_model_name(model): ((df[[col for col in df.columns if col.startswith(model)]]) == 1).sum().sum()
+    for model in sorted(set(get_model_name(col) for col in df.columns))
 }
 num_first_by_model = pd.Series(num_first_by_model).sort_values(ascending=True)
 
-plt.figure(figsize=(12, 6))
+plt.figure(figsize=(14, 6))
+num_first_by_model = num_first_by_model.sort_index(ascending=False)
 bars = plt.barh(range(len(num_first_by_model)), num_first_by_model.values.astype(float))
-# Clean model names in the labels
-cleaned_labels = [clean_model_name(label) for label in num_first_by_model.index]
-plt.yticks(range(len(num_first_by_model)), cleaned_labels)
+plt.yticks(range(len(num_first_by_model)), list(num_first_by_model.index))
 plt.xlabel('Number of #1 Rankings')
 plt.title('Number of Times Each Model Was Ranked #1', pad=20)
 
@@ -172,7 +184,8 @@ num_first_by_prompt = {
 }
 num_first_by_prompt = pd.Series(num_first_by_prompt).sort_values(ascending=True)
 
-plt.figure(figsize=(12, 4))
+plt.figure(figsize=(14, 4))
+num_first_by_prompt = num_first_by_prompt.sort_index(ascending=False)
 bars = plt.barh(range(len(num_first_by_prompt)), num_first_by_prompt.values.astype(float))
 plt.yticks(range(len(num_first_by_prompt)), list(num_first_by_prompt.index))
 plt.xlabel('Number of #1 Rankings')
