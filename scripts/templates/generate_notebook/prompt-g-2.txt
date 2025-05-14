@@ -40,7 +40,7 @@ When you select an NWB file to view, explain which file path you are loading. Al
 
 Summarize the contents of the NWB file in markdown, ideally using nicely formatted markdown trees or tables.
 
-Include a link to that NWB file on neurosift so the user can explore that if they wish: https://neurosift.app/nwb?url=https://api.dandiarchive.org/api/assets/...fill-in.../download/&dandisetId={{ DANDISET_ID }}&dandisetVersion=draft
+Include a link to that NWB file on neurosift so the user can explore that if they wish: https://neurosift.app/nwb?url=https://api.dandiarchive.org/api/assets/...fill-in.../download/&dandisetId={{ DANDISET_ID }}&dandisetVersion={{ VERSION }}
 
 Show how to load and visualize some data from the NWB file.
 

@@ -6400,6 +6400,20 @@
       }
     },
     {
+      "type": "human_veto",
+      "dandiset_id": "001375",
+      "version": "0.250406.1855",
+      "model": "anthropic/claude-3.7-sonnet",
+      "prompt": "prompt-g-2",
+      "subfolder": "claude-3.7-sonnet-prompt-g-2",
+      "vetoes": [
+        {
+          "user": "magland",
+          "reason": "Incorrect claims about correlations in PSTH\n"
+        }
+      ]
+    },
+    {
       "type": "notebook",
       "url": "https://github.com/dandi-ai-notebooks/001375/blob/main/v4/0.250406.1855/claude-3.7-sonnet-prompt-g-2/001375.ipynb",
       "dandiset_id": "001375",
